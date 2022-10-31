@@ -1,1 +1,0 @@
-// declaration file to add missing props on react-native-svg
