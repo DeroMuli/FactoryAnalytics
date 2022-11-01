@@ -5,14 +5,14 @@ import { screen_names } from '../constants/ScreenNames';
 import { ParamListBase } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native';
 
-const HomeScreen = ({navigation}: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
+const AboutScreen = ({navigation}: NativeStackScreenProps<ParamListBase, screen_names.ABOUT_US, undefined>) => {
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>
-                Home screen
+                About Screen
             </Text>
         </SafeAreaView>
     )
 };
 
-export default HomeScreen;
+export default AboutScreen;
