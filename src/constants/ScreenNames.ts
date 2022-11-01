@@ -1,7 +1,7 @@
 export enum screen_names {
     HOME = "Home",
     ANALYTICS = "Analytics",
-    FEED = "feed",
+    FEED = "Feed",
     ABOUT_US = "About us",
     TABS = "Tabs"
 }
