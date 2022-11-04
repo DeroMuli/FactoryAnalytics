@@ -12,7 +12,17 @@ import {useColorScheme} from 'react-native'
 
 export default function App() : JSX.Element {
   const [theme, setTheme] = useColorScheme() == "dark" ? useState<MD3Theme>(PaperDarkTheme) : useState<MD3Theme>(PaperLightTheme);
-  console.log(theme.dark)
+  useEffect(() => {
+    Appearance.addChangeListener(() => {
+      const colorsheme = Appearance.getColorScheme()
+      if(colorsheme == "dark"){
+        setTheme(PaperDarkTheme)
+      }
+      else{
+        setTheme(PaperLightTheme)
+      }
+    })
+  })
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
