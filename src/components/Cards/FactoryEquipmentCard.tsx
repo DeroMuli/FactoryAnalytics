@@ -10,11 +10,17 @@ import {
 
   const FactoryEquipmentCard = () =>  { 
     const {colors} = useTheme()
-    const styles = getstyles(colors.onPrimaryContainer)
     const [isSwitchOn, setIsSwitchOn] = React.useState(true);
-    const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+    const [backgroundColor, setbackgroundColor] = React.useState<string>(colors.onPrimaryContainer)
+    const onToggleSwitch = () => {
+        setIsSwitchOn(!isSwitchOn);
+        if(isSwitchOn)
+        setbackgroundColor(colors.onBackground)
+        else
+        setbackgroundColor(colors.onPrimaryContainer)
+    }
     return(
-    <TouchableOpacity style={styles.equipmentcard}>
+    <TouchableOpacity style={[styles.equipmentcard, {backgroundColor : backgroundColor}]}>
       <Icon name="slot-machine-outline" color={colors.onPrimary} style={{margin:5}} size={100}/>
       <Text style={{margin : 5}}>Temprature :  35 celcius</Text>
       <Text  style={{margin : 5}}> Speed : 50 m/s </Text>
@@ -23,13 +29,8 @@ import {
   )
   }
 
-  const getstyles = (cardcolor) => StyleSheet.create({
-    container : {
-      flex : 1 ,
-      alignItems : "center"
-    },
+  const styles = StyleSheet.create({
     equipmentcard : {
-      backgroundColor : cardcolor,
       margin : 5, 
       width : Dimensions.get('screen').width / 2 - 15,
       borderRadius : 10,
