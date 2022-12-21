@@ -1,31 +1,43 @@
 import React from 'react';
 import { Switch} from 'react-native-paper';
 import { useTheme } from "react-native-paper";
-import { FlatList, Dimensions, View , TouchableOpacity } from 'react-native';
-import Icon from  'react-native-vector-icons/MaterialCommunityIcons';
+import { Dimensions, TouchableOpacity } from 'react-native';
+import FactoryIcon from '../FactoryIcon';
+import type { Icon } from '../FactoryIcon';
 import {
     Text,
     StyleSheet
   } from "react-native";
 
-  const FactoryEquipmentCard = () =>  { 
-    const {colors} = useTheme()
+  type FactoryEquipmentCardProp = {
+    name : string,
+    icon : Icon
+  }
+
+  const FactoryEquipmentCard = (props : FactoryEquipmentCardProp) =>  { 
+    const {colors,fonts} = useTheme()
     const [isSwitchOn, setIsSwitchOn] = React.useState(true);
-    const [backgroundColor, setbackgroundColor] = React.useState<string>(colors.onPrimaryContainer)
+    const [containerColor, setContainerColor] = React.useState<string>(colors.onPrimaryContainer)
+    const [iconColor,setIconColor] = React.useState<string>(colors.onPrimary)
     const onToggleSwitch = () => {
         setIsSwitchOn(!isSwitchOn);
-        if(isSwitchOn)
-        setbackgroundColor(colors.onBackground)
-        else
-        setbackgroundColor(colors.onPrimaryContainer)
+        if(isSwitchOn){
+        setContainerColor(colors.onBackground)
+        setIconColor(colors.onError)
+        }
+        else{
+        setContainerColor(colors.onPrimaryContainer)
+        setIconColor(colors.onPrimary)
+        }
     }
     return(
-    <TouchableOpacity style={[styles.equipmentcard, {backgroundColor : backgroundColor}]}>
-      <Icon name="slot-machine-outline" color={colors.onPrimary} style={{margin:5}} size={100}/>
+    <TouchableOpacity style={[styles.equipmentcard, {backgroundColor : containerColor}]}>
+      <Text style={{margin : 5, fontWeight : "bold"}}>{props.name}</Text>
+      <FactoryIcon icon={props.icon} color={iconColor}/>
       <Text style={{margin : 5}}>Temprature :  35 celcius</Text>
       <Text  style={{margin : 5}}> Speed : 50 m/s </Text>
       <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-      </TouchableOpacity>
+    </TouchableOpacity>
   )
   }
 

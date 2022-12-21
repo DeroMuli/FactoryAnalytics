@@ -2,57 +2,56 @@ import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import { screen_names } from '../constants/ScreenNames';
 import { ParamListBase } from '@react-navigation/native';
-import { useTheme } from "react-native-paper";
 import { FlatList, Dimensions } from 'react-native';
 import {
-  Text,
   StyleSheet,
   SafeAreaView
 } from "react-native";
 import FactoryEquipmentCard from '../components/Cards/FactoryEquipmentCard';
 
+//
+
 const DATA = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    id: '1',
+    machineName: 'Milling machine',
+    icon : {iconlibrary : "FontAwesome" , iconname : "gears"}
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    id: '2',
+    machineName: 'CNC machine',
+    icon : {iconlibrary : "Entypo" , iconname : "classic-computer"}
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: '3',
+    machineName: 'Lathe machine',
+    icon : {iconlibrary : "FontAwesome" , iconname : "gear"}
   },
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    id: '4',
+    machineName: 'Steamer',
+    icon : {iconlibrary : "MaterialCommunityIcons" , iconname : "water-boiler"}
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    id: '5',
+    machineName: 'Generator',
+    icon : {iconlibrary : "MaterialCommunityIcons" , iconname : "lightning-bolt"}
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: '6',
+    machineName: 'Weaving machine',
+    icon : {iconlibrary : "MaterialCommunityIcons" , iconname : "spider-web"}
   },
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
+    id: '7',
+    machineName: 'Test Machine',
+    icon : {iconlibrary : "MaterialCommunityIcons" , iconname : "ab-testing"}
+  }
 ];
 
 const HomeScreen = ({navigation}: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
   const renderItem = ({ item }) => (
-    <FactoryEquipmentCard />
+    <FactoryEquipmentCard name={item.machineName} icon={item.icon}/>
   );
   return (
     <SafeAreaView style={styles.container}>
