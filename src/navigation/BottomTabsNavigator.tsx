@@ -26,26 +26,34 @@ const BottomTabNavigator = () : JSX.Element => {
               name={screen_names.HOME}
               options={{
                 tabBarIcon: ((props : tabBarIconsProps ) => (<FontAwesome  color={props.focused ? theme.colors.primary : theme.colors.inversePrimary} name="home" size={20}/>)),
-                headerTitleAlign : "center"
+                headerTitleAlign : "center",
+                headerStyle : {backgroundColor : theme.colors.elevation.level0},
+                headerTitleStyle : {color : theme.colors.onPrimary}
               }}/>
             <Tab.Screen component={FeedScreen} 
                name={screen_names.FEED}
                options={{
                 tabBarIcon: ((props: tabBarIconsProps ) => (<FontAwesome color={props.focused ? theme.colors.primary : theme.colors.inversePrimary} name="feed" size={20}/>)),
-                headerTitleAlign : "center"
+                headerTitleAlign : "center",
+                headerStyle : {backgroundColor : theme.colors.elevation.level0},
+                headerTitleStyle : {color : theme.colors.onPrimary}
                }}
                 />
             <Tab.Screen component={AnalyticsScreen} 
                name={screen_names.ANALYTICS} 
                options={{
                 tabBarIcon : ((props : tabBarIconsProps) => (<MaterialIcons color={props.focused ? theme.colors.primary : theme.colors.inversePrimary} name="analytics" size={20}/>)),
-                headerTitleAlign : "center"
+                headerTitleAlign : "center",
+                headerStyle : {backgroundColor : theme.colors.elevation.level0},
+                headerTitleStyle : {color : theme.colors.onPrimary}
                }}/>
             <Tab.Screen component={AboutScreen} 
                 name={screen_names.ABOUT_US}
                 options={{
                     tabBarIcon : ((props : tabBarIconsProps) => (<AntDesign color={props.focused ? theme.colors.primary : theme.colors.inversePrimary} name="team" size={20}/>)),
-                    headerTitleAlign : "center"
+                    headerTitleAlign : "center",
+                    headerStyle : {backgroundColor : theme.colors.elevation.level0},
+                    headerTitleStyle : {color : theme.colors.onPrimary}
                 }}
                />
         </Tab.Navigator>
