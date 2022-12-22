@@ -20,19 +20,20 @@ export type FactoryIconProp = {
 
 const FactoryIcon = (props : FactoryIconProp) => {
     const {icon,color} = props
+    const iconsize = 80
     switch(icon.iconlibrary){
         case "AntDesign":
-            return (<AntDesign name={icon.iconname} color={color} style={{margin:5}} size={100} />)
+            return (<AntDesign name={icon.iconname} color={color} style={{margin:5}} size={iconsize} />)
         case "Entypo":
-            return (<Entypo name={icon.iconname} color={color} style={{margin:5}} size={100} />)
+            return (<Entypo name={icon.iconname} color={color} style={{margin:5}} size={iconsize} />)
         case "EvilIcons":
-            return (<EvilIcons name={icon.iconname} color={color} style={{margin:5}} size={100}/>)
+            return (<EvilIcons name={icon.iconname} color={color} style={{margin:5}} size={iconsize}/>)
         case "Feather":
-            return (<Feather name={icon.iconname} color={color} style={{margin:5}} size={100}/>)
+            return (<Feather name={icon.iconname} color={color} style={{margin:5}} size={iconsize}/>)
         case "FontAwesome":
-            return (<FontAwesome name={icon.iconname} color={color} style={{margin:5}} size={100}/>)
+            return (<FontAwesome name={icon.iconname} color={color} style={{margin:5}} size={iconsize}/>)
         case "MaterialCommunityIcons":
-            return (<MaterialCommunityIcons name={icon.iconname} color={color} style={{margin:5}} size={100}/>)
+            return (<MaterialCommunityIcons name={icon.iconname} color={color} style={{margin:5}} size={iconsize}/>)
     }
 }
 
