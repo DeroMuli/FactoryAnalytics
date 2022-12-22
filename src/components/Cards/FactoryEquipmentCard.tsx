@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch} from 'react-native-paper';
 import { useTheme } from "react-native-paper";
 import { Dimensions, TouchableOpacity } from 'react-native';
-import FactoryIcon from '../FactoryIcon';
-import type { Icon } from '../FactoryIcon';
+import FactoryIcon from '../../assets/icons/FactoryIcon';
+import type { Icon } from '../../assets/icons/FactoryIcon';
 import {
     Text,
     StyleSheet
@@ -34,8 +34,8 @@ import {
     <TouchableOpacity style={[styles.equipmentcard, {backgroundColor : containerColor}]}>
       <Text style={{margin : 5, fontWeight : "bold"}}>{props.name}</Text>
       <FactoryIcon icon={props.icon} color={iconColor}/>
-      <Text style={{margin : 5}}>Temprature :  35 celcius</Text>
-      <Text  style={{margin : 5}}> Speed : 50 m/s </Text>
+      <Text style={{margin : 5, fontSize : 15}}> 35° C</Text>
+      <Text  style={{margin : 5}}> 50 m/s </Text>
       <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
     </TouchableOpacity>
   )
