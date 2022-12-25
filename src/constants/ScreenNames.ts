@@ -3,5 +3,6 @@ export enum screen_names {
     ANALYTICS = "Analytics",
     FEED = "Feed",
     ABOUT_US = "About us",
-    TABS = "Tabs"
+    TABS = "Tabs",
+    EQUIPMENT = "Equipment"
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import { screen_names } from '../constants/ScreenNames';
 import { ParamListBase } from '@react-navigation/native';
-import { FlatList, Dimensions } from 'react-native';
+import { FlatList} from 'react-native';
 import {
   StyleSheet,
   SafeAreaView
@@ -51,7 +51,7 @@ const DATA = [
 
 const HomeScreen = ({navigation}: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
   const renderItem = ({ item }) => (
-    <FactoryEquipmentCard name={item.machineName} icon={item.icon}/>
+    <FactoryEquipmentCard navigation={navigation} name={item.machineName} icon={item.icon}/>
   );
   return (
     <SafeAreaView style={styles.container}>

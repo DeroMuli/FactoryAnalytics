@@ -1,8 +1,8 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "../screens/HomeScreen";
 import { screen_names } from '../constants/ScreenNames';
 import BottomTabNavigator from "./BottomTabsNavigator";
+import EquipmentScreen from "../screens/EquipmentScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MainNavigator () : JSX.Element{
@@ -13,6 +13,10 @@ export default function MainNavigator () : JSX.Element{
                     headerShown : false
                 }
             }/>
+            <Stack.Screen 
+             component={EquipmentScreen}
+             name = {screen_names.EQUIPMENT}
+            />
         </Stack.Navigator>
     )
 }

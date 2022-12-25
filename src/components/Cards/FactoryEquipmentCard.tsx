@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect,useState} from 'react';
+import React, {useEffect,useState} from 'react';
 import { Switch} from 'react-native-paper';
 import { useTheme } from "react-native-paper";
 import { Dimensions, TouchableOpacity } from 'react-native';
@@ -8,10 +8,14 @@ import {
     Text,
     StyleSheet
   } from "react-native";
+import { screen_names } from '../../constants/ScreenNames';
+import { ParamListBase } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
   type FactoryEquipmentCardProp = {
     name : string,
-    icon : Icon
+    icon : Icon,
+    navigation : NativeStackNavigationProp<ParamListBase, screen_names.HOME, undefined>
   }
 
   const FactoryEquipmentCard = (props : FactoryEquipmentCardProp) =>  { 
@@ -43,7 +47,7 @@ import {
         }
     }
     return(
-    <TouchableOpacity style={[styles.equipmentcard, {backgroundColor : containerColor}]}>
+    <TouchableOpacity style={[styles.equipmentcard, {backgroundColor : containerColor}]} onPress={() => props.navigation.navigate(screen_names.EQUIPMENT)}>
       <Text style={{margin : 5, fontWeight : "bold"}}>{props.name}</Text>
       <FactoryIcon icon={props.icon} color={iconColor}/>
       <Text style={styles.datatext}> {temparature}° C</Text>
