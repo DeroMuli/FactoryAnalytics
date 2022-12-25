@@ -47,7 +47,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
         }
     }
     return(
-    <TouchableOpacity style={[styles.equipmentcard, {backgroundColor : containerColor}]} onPress={() => props.navigation.navigate(screen_names.EQUIPMENT)}>
+    <TouchableOpacity style={[styles.equipmentcard, {backgroundColor : containerColor}]} onPress={() => props.navigation.navigate(screen_names.EQUIPMENT,{Equipemt_name : props.name})}>
       <Text style={{margin : 5, fontWeight : "bold"}}>{props.name}</Text>
       <FactoryIcon icon={props.icon} color={iconColor}/>
       <Text style={styles.datatext}> {temparature}° C</Text>
