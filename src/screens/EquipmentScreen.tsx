@@ -15,8 +15,8 @@ const EquipmentScreen = ({navigation}: NativeStackScreenProps<ParamListBase, scr
   const {colors} = useTheme()
     return (
       <SafeAreaView style={styles.container}>
-        <ProgressBar progress={0.5} style={{width : 300,height : 8 , marginTop : 10, borderRadius : 5 , transform: [{ scaleX: 5 }, { scaleY: 1 }]}}  color={MD3Colors.primary40} />
-        <Text>Some</Text>
+        <ProgressCircle style={{ height: 50 , width : 30 , marginTop : 10 }} progress={0.7} progressColor={'rgb(134, 65, 244)'} />
+        <Text>Progress circle for the speed</Text>
       </SafeAreaView>
   )
   };
