@@ -9,7 +9,7 @@ const FeedScreen = ({navigation}: NativeStackScreenProps<ParamListBase, screen_n
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>
-                Feed Screen
+                //Feed Screen
             </Text>
         </SafeAreaView>
     )

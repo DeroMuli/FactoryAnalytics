@@ -19,7 +19,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
   }
 
   const FactoryEquipmentCard = (props : FactoryEquipmentCardProp) =>  { 
-    //radom data values
+    //random data values
     const [temparature,settemprature] = useState<number>(25)
     const [speed,setspeed] = useState<number>(50)
     useEffect(() => {
