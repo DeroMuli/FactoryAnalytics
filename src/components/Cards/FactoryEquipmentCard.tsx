@@ -1,6 +1,5 @@
 import React, {useEffect,useState} from 'react';
-import { Switch} from 'react-native-paper';
-import { useTheme } from "react-native-paper";
+import { Switch , useTheme} from 'react-native-paper';
 import { Dimensions, TouchableOpacity } from 'react-native';
 import FactoryIcon from '../../assets/icons/FactoryIcon';
 import type { Icon } from '../../assets/icons/FactoryIcon';
