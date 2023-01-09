@@ -1,3 +1,3 @@
 export default {
-    progresscircle : 'rgb(134, 65, 244)'
+  progresscircle: "rgb(134, 65, 244)",
 };
