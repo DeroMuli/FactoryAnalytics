@@ -3,7 +3,8 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen_names } from "../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
 import SpeedControlComponent from "../components/SpeedControlComponent";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
+import { Chip } from "react-native-paper";
 
 const EquipmentScreen = ({
   navigation,
@@ -14,7 +15,32 @@ const EquipmentScreen = ({
 >) => {
   return (
     <SafeAreaView style={styles.container}>
-      <SpeedControlComponent />
+      <View style={styles.rowContainer}>
+        <Chip
+          style={styles.chip}
+          icon="information"
+          onPress={() => console.log("Pressed")}
+        >
+          {" "}
+          temparature{" "}
+        </Chip>
+        <Chip
+          style={styles.chip}
+          icon="information"
+          onPress={() => console.log("Pressed")}
+        >
+          {" "}
+          speed{" "}
+        </Chip>
+        <Chip
+          style={styles.chip}
+          icon="information"
+          onPress={() => console.log("Pressed")}
+        >
+          {" "}
+          torque{" "}
+        </Chip>
+      </View>
     </SafeAreaView>
   );
 };
@@ -22,14 +48,14 @@ const EquipmentScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
   },
-  speed_progressCircle: {
-    height: 150,
-    width: 150,
+  rowContainer: {
+    flexDirection: "row",
     marginTop: 10,
   },
-  speedtext: {},
+  chip: {
+    margin: 2,
+  },
 });
 
 export default EquipmentScreen;

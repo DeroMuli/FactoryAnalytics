@@ -4,7 +4,7 @@ import { useTheme } from "react-native-paper";
 import { ProgressCircle } from "react-native-svg-charts";
 import { Slider } from "@miblanchard/react-native-slider";
 import { Switch } from "react-native-paper";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 const SpeedControlComponent = () => {
   const { fonts } = useTheme();
@@ -21,7 +21,7 @@ const SpeedControlComponent = () => {
     setspeed(num);
   };
   return (
-    <>
+    <View style={styles.container}>
       <ProgressCircle
         style={styles.speed_progressCircle}
         progress={speed * 0.01}
@@ -58,7 +58,7 @@ const SpeedControlComponent = () => {
         value={isSwitchOn}
         onValueChange={onToggleSwitch}
       />
-    </>
+    </View>
   );
 };
 
@@ -68,7 +68,9 @@ const styles = StyleSheet.create({
     width: 150,
     marginTop: 10,
   },
-  speedtext: {},
+  container: {
+    alignItems: "center",
+  },
 });
 
 export default SpeedControlComponent;
