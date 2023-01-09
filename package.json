@@ -8,12 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "prepare": "husky install .husky",
-    "format": "prettier --write ."
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format"
-    }
+    "precommit": "pretty-quick --staged"
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.0",
