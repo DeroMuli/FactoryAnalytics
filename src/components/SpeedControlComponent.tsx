@@ -10,19 +10,25 @@ import {
 
 const SpeedControlComponent = () => {
     const {fonts} = useTheme()
+    const [speed,setspeed] = useState<number>(0)
+
+    const speedchanged = (value : number | number[]) => {
+      let num = value[0]
+      setspeed(num)  
+    }
     return (
     <>
     <ProgressCircle
         style={styles.speed_progressCircle}
-        progress={0.5}
+        progress={speed*0.01}
         progressColor={definedcolor.progresscircle}
         startAngle={-Math.PI * 0.5}
         endAngle={Math.PI * 0.5}
         strokeWidth={10}
         cornerRadius={0}
       />
-    <Text style={{fontWeight : fonts.displayLarge.fontWeight , fontFamily : fonts.displayLarge.fontFamily , fontSize : fonts.displayLarge.fontSize , top : -130}}>54</Text>
-    <Slider thumbTintColor={definedcolor.progresscircle} minimumTrackTintColor={definedcolor.progresscircle} minimumValue={0} maximumValue={100} containerStyle={{width : 150, top : -130}}/>
+    <Text style={{fontWeight : fonts.displayLarge.fontWeight , fontFamily : fonts.displayLarge.fontFamily , fontSize : fonts.displayLarge.fontSize , top : -130}}>{Math.trunc(speed)}</Text>
+    <Slider step={1} onValueChange={speedchanged} thumbTintColor={definedcolor.progresscircle} minimumTrackTintColor={definedcolor.progresscircle} minimumValue={0} maximumValue={100} containerStyle={{width : 150,height : 10  ,top : -130}}/>
     </>
     )
 }
