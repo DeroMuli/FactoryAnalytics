@@ -40,6 +40,14 @@ const EquipmentScreen = ({
           {" "}
           torque{" "}
         </Chip>
+        <Chip
+          style={styles.chip}
+          icon="information"
+          onPress={() => console.log("Pressed")}
+        >
+          {" "}
+          general stuff{" "}
+        </Chip>
       </View>
     </SafeAreaView>
   );
