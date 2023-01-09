@@ -7,11 +7,12 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "prepare": "husky install .husky"
+    "prepare": "husky install .husky",
+    "format": "prettier --write ."
   },
   "husky": {
     "hooks": {
-      "pre-commit" : "pretty-quick --staged"
+      "pre-commit": "npm run format"
     }
   },
   "dependencies": {

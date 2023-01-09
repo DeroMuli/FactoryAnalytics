@@ -53,8 +53,9 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
           Equipemt_name: props.name,
         })
       }
-    > <Text style={{ margin: 5, fontWeight: "bold" }}>{props.name}</Text> <FactoryIcon icon={props.icon} color={iconColor} />
-      <Text style={styles.datatext}> {temparature}° C</Text>
+    >
+      {" "}
+      <Text style={{ margin: 5, fontWeight: "bold" }}>{props.name}</Text>{" "} <FactoryIcon icon={props.icon} color={iconColor} /> <Text style={styles.datatext}> {temparature}° C</Text>
       <Text style={styles.datatext}> {speed} m/s </Text>
       <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
     </TouchableOpacity>
