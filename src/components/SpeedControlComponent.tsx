@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import definedcolor from "../constants/colors";
 import { useTheme } from "react-native-paper";
 import { ProgressCircle } from "react-native-svg-charts";
 import { Slider } from "@miblanchard/react-native-slider";
@@ -7,7 +6,7 @@ import { Switch } from "react-native-paper";
 import { StyleSheet, Text, View } from "react-native";
 
 const SpeedControlComponent = () => {
-  const { fonts } = useTheme();
+  const { fonts, colors } = useTheme();
   const [speed, setspeed] = useState<number>(0);
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const onToggleSwitch = () => {
@@ -25,7 +24,7 @@ const SpeedControlComponent = () => {
       <ProgressCircle
         style={styles.speed_progressCircle}
         progress={speed * 0.01}
-        progressColor={definedcolor.progresscircle}
+        progressColor={colors.onPrimary}
         startAngle={-Math.PI * 0.5}
         endAngle={Math.PI * 0.5}
         strokeWidth={10}
@@ -44,8 +43,8 @@ const SpeedControlComponent = () => {
       <Slider
         step={1}
         onValueChange={speedchanged}
-        thumbTintColor={definedcolor.progresscircle}
-        minimumTrackTintColor={definedcolor.progresscircle}
+        thumbTintColor={colors.onPrimary}
+        minimumTrackTintColor={colors.onPrimary}
         minimumValue={0}
         maximumValue={100}
         containerStyle={{ width: 150, height: 10, top: -130 }}
@@ -53,7 +52,7 @@ const SpeedControlComponent = () => {
         disabled={!isSwitchOn}
       />
       <Switch
-        color={definedcolor.progresscircle}
+        color={colors.onPrimary}
         style={{ top: -130, marginTop: 5 }}
         value={isSwitchOn}
         onValueChange={onToggleSwitch}
