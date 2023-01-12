@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Switch, useTheme } from "react-native-paper";
 import { Dimensions, TouchableOpacity } from "react-native";
-import FactoryIcon from "../../assets/icons/FactoryIcon";
-import type { Icon } from "../../assets/icons/FactoryIcon";
+import FactoryIcon from "../../assets/icons/FactoryEquipmentIcon";
+import type { Icon } from "../../assets/icons/FactoryEquipmentIcon";
 import { Text, StyleSheet } from "react-native";
 import { screen_names } from "../../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
