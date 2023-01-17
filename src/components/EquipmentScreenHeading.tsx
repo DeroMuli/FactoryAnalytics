@@ -15,7 +15,7 @@ const EquipmentScreenHeading = (props: EquipmentScreenHeadingProps) => {
         fontFamily: fonts.bodyLarge.fontFamily,
         fontSize: fonts.bodyLarge.fontSize,
         fontWeight: "bold",
-        color: definedcolor.EquipmentScreenHeading,
+        color: definedcolor.HeadingColor,
         alignSelf: "center",
         marginVertical: 10,
         textDecorationLine: "underline",

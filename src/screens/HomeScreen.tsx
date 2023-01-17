@@ -5,9 +5,9 @@ import { ParamListBase } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { StyleSheet, SafeAreaView } from "react-native";
 import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
+import colors from "../constants/colors";
 
-//
-
+//mock data
 const DATA = [
   {
     id: "1",
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: colors.ScreenBackroundColor,
   },
 });
 
