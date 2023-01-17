@@ -22,11 +22,12 @@ export type Icon = {
 export type FactoryIconProp = {
   color: string;
   icon: Icon;
+  iconsize?: number;
 };
 
-const FactoryIcon = (props: FactoryIconProp) => {
+const VectorIcon = (props: FactoryIconProp) => {
   const { icon, color } = props;
-  const iconsize = 80;
+  const iconsize = props.iconsize || 80;
   switch (icon.iconlibrary) {
     case "AntDesign":
       return (
@@ -85,4 +86,4 @@ const FactoryIcon = (props: FactoryIconProp) => {
   }
 };
 
-export default FactoryIcon;
+export default VectorIcon;
