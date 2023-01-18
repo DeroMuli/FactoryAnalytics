@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import { Chip, useTheme } from "react-native-paper";
 import colors from "../constants/colors";
@@ -61,8 +61,9 @@ const EquipmentAnalytics = (): JSX.Element => {
 
 type SpecificDataAnalyticsProp = { datatype: DataType };
 const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
-  const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
-
+  const [graphdata, setgraphdata] = useState<number[]>([
+    50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 60,
+  ]);
   if (props.datatype === "General") {
     return (
       <View style={styles.generalStatsContainer}>
@@ -102,7 +103,7 @@ const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
     return (
       <LineChart
         style={styles.lineChartContainer}
-        data={data}
+        data={graphdata}
         svg={{ stroke: "rgb(134, 65, 244)" }}
         contentInset={{ top: 20, bottom: 20 }}
       >

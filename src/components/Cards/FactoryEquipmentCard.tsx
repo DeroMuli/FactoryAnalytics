@@ -19,16 +19,8 @@ type FactoryEquipmentCardProp = {
 };
 
 const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
-  //radom data values
   const [temparature, settemprature] = useState<number>(25);
   const [speed, setspeed] = useState<number>(50);
-  useEffect(() => {
-    const id = setInterval(() => {
-      settemprature(temparature + 2);
-      setspeed(speed + 5);
-    }, 2000);
-    return () => clearInterval(id);
-  }, [temparature]);
   const { colors } = useTheme();
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [containerColor, setContainerColor] = useState<string>(
