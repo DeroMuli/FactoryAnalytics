@@ -5,9 +5,9 @@ import { screen_names } from "../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
 import { SafeAreaView } from "react-native";
 
-const FeedScreen = ({
+const TimeLineScreen = ({
   navigation,
-}: NativeStackScreenProps<ParamListBase, screen_names.FEED, undefined>) => {
+}: NativeStackScreenProps<ParamListBase, screen_names.TIMELINE, undefined>) => {
   return (
     <SafeAreaView
       style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -17,4 +17,4 @@ const FeedScreen = ({
   );
 };
 
-export default FeedScreen;
+export default TimeLineScreen;

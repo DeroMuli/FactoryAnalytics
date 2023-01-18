@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { screen_names } from "../constants/ScreenNames";
 import AboutScreen from "../screens/AboutScreen";
 import AnalyticsScreen from "../screens/AnalyticsScreen";
-import FeedScreen from "../screens/FeedScreen";
+import TimeLineScreen from "../screens/TimeLineScreen";
 import HomeScreen from "../screens/HomeScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -43,8 +43,8 @@ const BottomTabNavigator = (): JSX.Element => {
         }}
       />
       <Tab.Screen
-        component={FeedScreen}
-        name={screen_names.FEED}
+        component={TimeLineScreen}
+        name={screen_names.TIMELINE}
         options={{
           tabBarIcon: (props: tabBarIconsProps) => (
             <FontAwesome
@@ -53,7 +53,7 @@ const BottomTabNavigator = (): JSX.Element => {
                   ? theme.colors.primary
                   : theme.colors.inversePrimary
               }
-              name="feed"
+              name="clock-o"
               size={20}
             />
           ),
