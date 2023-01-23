@@ -6,6 +6,7 @@ import { ParamListBase } from "@react-navigation/native";
 import { SafeAreaView } from "react-native";
 import colors from "../constants/colors";
 import FancySeparator from "../assets/icons/FancySeparator";
+import TimeLineEventCard from "../components/Cards/TimeLineEventCard";
 
 //events card mock data
 const DATA = [
@@ -35,16 +36,6 @@ const DATA = [
 const TimeLineScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.TIMELINE, undefined>) => {
-  const renderItem = ({ item }) => (
-    <View
-      style={{
-        height: 101,
-        width: 300,
-        backgroundColor: "#FFFFFF",
-        borderRadius: 10,
-      }}
-    ></View>
-  );
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FlatList
@@ -54,7 +45,7 @@ const TimeLineScreen = ({
           alignItems: "center",
         }}
         data={DATA}
-        renderItem={renderItem}
+        renderItem={TimeLineEventCard}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={(item) => {
           const separatorcolor =

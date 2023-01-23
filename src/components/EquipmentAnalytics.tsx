@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { Chip, useTheme } from "react-native-paper";
 import colors from "../constants/colors";
 import properties from "../constants/Properties";
@@ -12,7 +12,7 @@ const EquipmentAnalytics = (): JSX.Element => {
   const [chartOrcard, setchartorcard] = useState<DataType>("General");
   return (
     <>
-      <View style={styles.rowContainer}>
+      <ScrollView style={styles.chipscroll} horizontal>
         <Chip
           style={styles.chip}
           icon="information"
@@ -53,7 +53,7 @@ const EquipmentAnalytics = (): JSX.Element => {
           {" "}
           temprature{" "}
         </Chip>
-      </View>
+      </ScrollView>
       <SpecificDataAnalytics datatype={chartOrcard} />
     </>
   );
@@ -114,10 +114,8 @@ const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
 };
 
 const styles = StyleSheet.create({
-  rowContainer: {
-    flexDirection: "row",
-    marginTop: 10,
-    flexWrap: "wrap",
+  chipscroll: {
+    margin: 2,
   },
   chip: {
     margin: 3,
