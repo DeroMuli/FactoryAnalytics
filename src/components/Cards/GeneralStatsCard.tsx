@@ -45,6 +45,7 @@ const GeneralStatsCard = (props: GeneralStatsCardProps) => {
           color={colors.onPrimary}
           icon={props.dataicon}
           iconsize={60}
+          iconstyle={{ margin: 5 }}
         />
         <Text style={{ fontSize: 25 }}>{props.dataValue}</Text>
         <Text style={{ bottom: -3 }}> {props.units}</Text>

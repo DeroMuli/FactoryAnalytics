@@ -47,7 +47,11 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
       }
     >
       <Text style={{ margin: 5, fontWeight: "bold" }}>{props.name}</Text>
-      <VectorIcon icon={props.icon} color={iconColor} />
+      <VectorIcon
+        icon={props.icon}
+        color={iconColor}
+        iconstyle={{ margin: 5 }}
+      />
       <Text style={styles.datatext}> {temparature}° C</Text>
       <Text style={styles.datatext}> {speed} m/s </Text>
       <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />

@@ -5,6 +5,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { StyleProp, ViewStyle } from "react-native";
 
 type IconLibrary =
   | "FontAwesome"
@@ -23,18 +24,20 @@ export type FactoryIconProp = {
   color: string;
   icon: Icon;
   iconsize?: number;
+  iconstyle: StyleProp<ViewStyle>;
 };
 
 const VectorIcon = (props: FactoryIconProp) => {
   const { icon, color } = props;
   const iconsize = props.iconsize || 80;
+  const style = props.iconstyle;
   switch (icon.iconlibrary) {
     case "AntDesign":
       return (
         <AntDesign
           name={icon.iconname}
           color={color}
-          style={{ margin: 5 }}
+          style={style}
           size={iconsize}
         />
       );
@@ -43,7 +46,7 @@ const VectorIcon = (props: FactoryIconProp) => {
         <Entypo
           name={icon.iconname}
           color={color}
-          style={{ margin: 5 }}
+          style={style}
           size={iconsize}
         />
       );
@@ -52,7 +55,7 @@ const VectorIcon = (props: FactoryIconProp) => {
         <EvilIcons
           name={icon.iconname}
           color={color}
-          style={{ margin: 5 }}
+          style={style}
           size={iconsize}
         />
       );
@@ -61,7 +64,7 @@ const VectorIcon = (props: FactoryIconProp) => {
         <Feather
           name={icon.iconname}
           color={color}
-          style={{ margin: 5 }}
+          style={style}
           size={iconsize}
         />
       );
@@ -70,7 +73,7 @@ const VectorIcon = (props: FactoryIconProp) => {
         <FontAwesome
           name={icon.iconname}
           color={color}
-          style={{ margin: 5 }}
+          style={style}
           size={iconsize}
         />
       );
@@ -79,7 +82,7 @@ const VectorIcon = (props: FactoryIconProp) => {
         <MaterialCommunityIcons
           name={icon.iconname}
           color={color}
-          style={{ margin: 5 }}
+          style={style}
           size={iconsize}
         />
       );

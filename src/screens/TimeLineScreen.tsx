@@ -1,6 +1,6 @@
 import React from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Text, View, FlatList, StyleProp, ViewStyle } from "react-native";
+import { FlatList, StyleProp, ViewStyle } from "react-native";
 import { screen_names } from "../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
 import { SafeAreaView } from "react-native";
@@ -45,7 +45,7 @@ const TimeLineScreen = ({
           alignItems: "center",
         }}
         data={DATA}
-        renderItem={TimeLineEventCard}
+        renderItem={(item) => <TimeLineEventCard />}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={(item) => {
           const separatorcolor =
