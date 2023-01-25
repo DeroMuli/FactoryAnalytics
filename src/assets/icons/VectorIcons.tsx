@@ -5,6 +5,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { StyleProp, ViewStyle } from "react-native";
 
 type IconLibrary =
@@ -13,7 +14,8 @@ type IconLibrary =
   | "Entypo"
   | "EvilIcons"
   | "Feather"
-  | "MaterialCommunityIcons";
+  | "MaterialCommunityIcons"
+  | "MaterialIcons";
 
 export type Icon = {
   iconname: string;
@@ -80,6 +82,15 @@ const VectorIcon = (props: FactoryIconProp) => {
     case "MaterialCommunityIcons":
       return (
         <MaterialCommunityIcons
+          name={icon.iconname}
+          color={color}
+          style={style}
+          size={iconsize}
+        />
+      );
+    case "MaterialIcons":
+      return (
+        <MaterialIcons
           name={icon.iconname}
           color={color}
           style={style}

@@ -7,29 +7,58 @@ import { SafeAreaView } from "react-native";
 import colors from "../constants/colors";
 import FancySeparator from "../assets/icons/FancySeparator";
 import TimeLineEventCard from "../components/Cards/TimeLineEventCard";
+import type { TimeLineEventCardProps } from "../components/Cards/TimeLineEventCard";
 
 //events card mock data
-const DATA = [
+const DATA: (TimeLineEventCardProps & { id: string })[] = [
   {
     id: "1",
+    date: new Date(),
+    event: "Added Device",
+    message: "The milling machine device number 11000 has been added",
+    room: "Sewing department",
   },
   {
     id: "2",
+    date: new Date(),
+    event: "Warning",
+    message: "The milling machine device number 11000 has issues",
+    room: "Sewing department",
   },
   {
     id: "3",
+    date: new Date(),
+    event: "Breakdown",
+    message: "The milling machine device number 11000 has broken down",
+    room: "Sewing department",
   },
   {
     id: "4",
+    date: new Date(),
+    event: "Removed device",
+    message: "The milling machine device number 11000 has been removed",
+    room: "Sewing department",
   },
   {
     id: "5",
+    date: new Date(),
+    event: "Added Device",
+    message: "The milling machine device number 11000 has been added",
+    room: "Sewing department",
   },
   {
     id: "6",
+    date: new Date(),
+    event: "Added Device",
+    message: "The milling machine device number 11000 has been added",
+    room: "Sewing department",
   },
   {
     id: "7",
+    date: new Date(),
+    event: "Added Device",
+    message: "The milling machine device number 11000 has been added",
+    room: "Sewing department",
   },
 ];
 
@@ -45,7 +74,14 @@ const TimeLineScreen = ({
           alignItems: "center",
         }}
         data={DATA}
-        renderItem={(item) => <TimeLineEventCard />}
+        renderItem={({ item }) => (
+          <TimeLineEventCard
+            date={item.date}
+            event={item.event}
+            message={item.message}
+            room={item.room}
+          />
+        )}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={(item) => {
           const separatorcolor =
