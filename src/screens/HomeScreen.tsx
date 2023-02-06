@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen_names } from "../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
@@ -6,6 +6,8 @@ import { FlatList } from "react-native";
 import { StyleSheet, SafeAreaView } from "react-native";
 import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
 import colors from "../constants/colors";
+import axios from "axios";
+import { REST_URL, SOCKET_URL } from "@env";
 
 //mock data
 const DATA = [
@@ -49,6 +51,19 @@ const DATA = [
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
+  const getdata = async () => {
+    try {
+      console.log(SOCKET_URL);
+      console.log(REST_URL);
+      const data = await axios.get(REST_URL);
+      console.log(data);
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+  useEffect(() => {
+    getdata();
+  });
   const renderItem = ({ item }) => (
     <FactoryEquipmentCard
       navigation={navigation}
