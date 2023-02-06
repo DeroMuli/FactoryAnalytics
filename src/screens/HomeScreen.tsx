@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen_names } from "../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
@@ -9,8 +9,13 @@ import colors from "../constants/colors";
 import axios from "axios";
 import { REST_URL, SOCKET_URL } from "@env";
 
+type mockdata = {
+  id: string;
+  machineName: string;
+  icon: { iconlibrary: string; iconname: string };
+};
 //mock data
-const DATA = [
+const DATA: Array<mockdata> = [
   {
     id: "1",
     machineName: "Milling machine",
@@ -51,12 +56,14 @@ const DATA = [
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
+  const [data, setdata] = useState<Array<mockdata>>(DATA);
   const getdata = async () => {
     try {
       console.log(SOCKET_URL);
       console.log(REST_URL);
-      const data = await axios.get(REST_URL);
-      console.log(data);
+      const result = await axios.get(REST_URL);
+      console.log(result.data);
+      // setdata(result.data)
     } catch (err: any) {
       console.log(err.message);
     }
@@ -75,7 +82,7 @@ const HomeScreen = ({
     <SafeAreaView style={styles.container}>
       <FlatList
         numColumns={2}
-        data={DATA}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
