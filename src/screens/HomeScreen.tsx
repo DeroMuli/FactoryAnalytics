@@ -7,69 +7,53 @@ import { StyleSheet, SafeAreaView } from "react-native";
 import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
 import colors from "../constants/colors";
 import axios from "axios";
-import { REST_URL, SOCKET_URL } from "@env";
+import { REST_URL } from "@env";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
-type mockdata = {
-  id: string;
+type equipment_card_item_data = {
+  id: number;
   machineName: string;
   icon: { iconlibrary: string; iconname: string };
 };
-//mock data
-const DATA: Array<mockdata> = [
-  {
-    id: "1",
-    machineName: "Milling machine",
-    icon: { iconlibrary: "FontAwesome", iconname: "gears" },
-  },
-  {
-    id: "2",
-    machineName: "CNC machine",
-    icon: { iconlibrary: "Entypo", iconname: "classic-computer" },
-  },
-  {
-    id: "3",
-    machineName: "Lathe machine",
-    icon: { iconlibrary: "FontAwesome", iconname: "gear" },
-  },
-  {
-    id: "4",
-    machineName: "Steamer",
-    icon: { iconlibrary: "MaterialCommunityIcons", iconname: "water-boiler" },
-  },
-  {
-    id: "5",
-    machineName: "Generator",
-    icon: { iconlibrary: "MaterialCommunityIcons", iconname: "lightning-bolt" },
-  },
-  {
-    id: "6",
-    machineName: "Weaving machine",
-    icon: { iconlibrary: "MaterialCommunityIcons", iconname: "spider-web" },
-  },
-  {
-    id: "7",
-    machineName: "Test Machine",
-    icon: { iconlibrary: "MaterialCommunityIcons", iconname: "ab-testing" },
-  },
-];
+
+type fetcheddata_schema = {
+  id: number;
+  name: string;
+  mean_speed: number;
+  mean_torque: number;
+  mean_temp: number;
+  icon_library: string;
+  icon_name: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
-  const [data, setdata] = useState<Array<mockdata>>(DATA);
-  const getdata = async () => {
+  const [equipmentdata, setEquipmnetdata] = useState<
+    Array<equipment_card_item_data>
+  >([]);
+  const getEquipmentData = async () => {
     try {
-      console.log(SOCKET_URL);
-      console.log(REST_URL);
-      const result = await axios.get(REST_URL);
-      console.log(result.data);
-      // setdata(result.data)
+      const data = await (
+        await axios.get<Array<fetcheddata_schema>>(REST_URL)
+      ).data;
+      const newinfo: Array<equipment_card_item_data> = [];
+      data.forEach((item: fetcheddata_schema) => {
+        newinfo.push({
+          id: item.id,
+          machineName: item.name,
+          icon: { iconlibrary: item.icon_library, iconname: item.icon_name },
+        });
+      });
+      setEquipmnetdata(newinfo);
     } catch (err: any) {
-      console.log(err.message);
+      console.log(err);
     }
   };
   useEffect(() => {
-    getdata();
+    getEquipmentData();
   });
   const renderItem = ({ item }) => (
     <FactoryEquipmentCard
@@ -78,11 +62,13 @@ const HomeScreen = ({
       icon={item.icon}
     />
   );
-  return (
+  return equipmentdata.length == 0 ? (
+    <ActivityIndicator animating={true} color={colors.HeadingColor} />
+  ) : (
     <SafeAreaView style={styles.container}>
       <FlatList
         numColumns={2}
-        data={data}
+        data={equipmentdata}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
