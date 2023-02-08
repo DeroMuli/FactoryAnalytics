@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen_names } from "../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
-import { FlatList } from "react-native";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { FlatList, View } from "react-native";
+import { StyleSheet, SafeAreaView, Text } from "react-native";
 import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
 import colors from "../constants/colors";
 import axios from "axios";
 import { REST_URL } from "@env";
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { ActivityIndicator } from "react-native-paper";
 
 type equipment_card_item_data = {
   id: number;
@@ -63,7 +63,14 @@ const HomeScreen = ({
     />
   );
   return equipmentdata.length == 0 ? (
-    <ActivityIndicator animating={true} color={colors.HeadingColor} />
+    <View style={styles.loadingcontainer}>
+      <ActivityIndicator
+        size={40}
+        animating={true}
+        color={colors.HeadingColor}
+      />
+      <Text style={styles.loadingtext}>loading ...</Text>
+    </View>
   ) : (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -81,6 +88,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: colors.ScreenBackroundColor,
+  },
+  loadingcontainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  loadingtext: {
+    marginStart: 10,
+    marginTop: 5,
   },
 });
 
