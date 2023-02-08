@@ -9,6 +9,7 @@ import colors from "../constants/colors";
 import axios from "axios";
 import { REST_URL } from "@env";
 import { ActivityIndicator } from "react-native-paper";
+import { useGetFactoryEquipmentsDataQuery } from "../state/apislicer";
 
 type equipment_card_item_data = {
   id: number;
@@ -31,6 +32,11 @@ type fetcheddata_schema = {
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
+  const { data, isLoading, isSuccess, isError, error } =
+    useGetFactoryEquipmentsDataQuery("");
+  if (isLoading) console.log("fetching data");
+  else if (isSuccess) console.log(data);
+  else if (isError) console.log("error");
   const [equipmentdata, setEquipmnetdata] = useState<
     Array<equipment_card_item_data>
   >([]);
