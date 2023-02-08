@@ -7,8 +7,10 @@ import {
   MD3LightTheme as PaperLightTheme,
   MD3Theme,
 } from "react-native-paper";
-import { Appearance, ColorSchemeName } from "react-native";
+import { Appearance } from "react-native";
 import { useColorScheme } from "react-native";
+import { Provider } from "react-redux";
+import store from "./src/state/store";
 
 export default function App(): JSX.Element {
   const [theme, setTheme] =
@@ -27,9 +29,11 @@ export default function App(): JSX.Element {
   });
   return (
     <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <MainNavigator />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <MainNavigator />
+        </NavigationContainer>
+      </Provider>
     </PaperProvider>
   );
 }
