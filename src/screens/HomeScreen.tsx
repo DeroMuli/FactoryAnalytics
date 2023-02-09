@@ -6,8 +6,6 @@ import { FlatList, View } from "react-native";
 import { StyleSheet, SafeAreaView, Text } from "react-native";
 import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
 import colors from "../constants/colors";
-import axios from "axios";
-import { REST_URL } from "@env";
 import { ActivityIndicator } from "react-native-paper";
 import { useGetFactoryEquipmentsDataQuery } from "../state/apislicer";
 
@@ -17,7 +15,7 @@ type equipment_card_item_data = {
   icon: { iconlibrary: string; iconname: string };
 };
 
-type fetcheddata_schema = {
+export type fetcheddata_schema = {
   id: number;
   name: string;
   mean_speed: number;
@@ -32,35 +30,6 @@ type fetcheddata_schema = {
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetFactoryEquipmentsDataQuery("");
-  if (isLoading) console.log("fetching data");
-  else if (isSuccess) console.log(data);
-  else if (isError) console.log("error");
-  const [equipmentdata, setEquipmnetdata] = useState<
-    Array<equipment_card_item_data>
-  >([]);
-  const getEquipmentData = async () => {
-    try {
-      const data = await (
-        await axios.get<Array<fetcheddata_schema>>(REST_URL)
-      ).data;
-      const newinfo: Array<equipment_card_item_data> = [];
-      data.forEach((item: fetcheddata_schema) => {
-        newinfo.push({
-          id: item.id,
-          machineName: item.name,
-          icon: { iconlibrary: item.icon_library, iconname: item.icon_name },
-        });
-      });
-      setEquipmnetdata(newinfo);
-    } catch (err: any) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    getEquipmentData();
-  });
   const renderItem = ({ item }) => (
     <FactoryEquipmentCard
       navigation={navigation}
@@ -68,7 +37,9 @@ const HomeScreen = ({
       icon={item.icon}
     />
   );
-  return equipmentdata.length == 0 ? (
+  const { data, isSuccess, isError, error } =
+    useGetFactoryEquipmentsDataQuery();
+  let content: JSX.Element = (
     <View style={styles.loadingcontainer}>
       <ActivityIndicator
         size={40}
@@ -77,16 +48,31 @@ const HomeScreen = ({
       />
       <Text style={styles.loadingtext}>loading ...</Text>
     </View>
-  ) : (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        numColumns={2}
-        data={equipmentdata}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-    </SafeAreaView>
   );
+  if (isSuccess) {
+    const equipmentdata: Array<equipment_card_item_data> = [];
+    data.forEach((item: fetcheddata_schema) => {
+      equipmentdata.push({
+        id: item.id,
+        machineName: item.name,
+        icon: { iconlibrary: item.icon_library, iconname: item.icon_name },
+      });
+    });
+    content = (
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          numColumns={2}
+          data={equipmentdata}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+      </SafeAreaView>
+    );
+  } else if (isError) {
+    //add a logging and monitoring system
+    console.log(error);
+  }
+  return content;
 };
 
 const styles = StyleSheet.create({
