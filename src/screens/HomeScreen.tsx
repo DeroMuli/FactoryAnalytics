@@ -8,6 +8,7 @@ import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
 import colors from "../constants/colors";
 import { ActivityIndicator } from "react-native-paper";
 import { useGetFactoryEquipmentsDataQuery } from "../state/apislicer";
+import { SOCKET_URL } from "@env";
 
 type equipment_card_item_data = {
   id: number;
@@ -30,11 +31,33 @@ export type fetcheddata_schema = {
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
+  const [temparature, settemprature] = useState<number>(0);
+  const [speed, setspeed] = useState<number>(0);
+  let ws = new WebSocket(SOCKET_URL);
+  useEffect(() => {
+    ws.onopen = () => {
+      console.log("connected");
+    };
+    ws.onmessage = (event: MessageEvent) => {
+      let data = JSON.parse(event.data) as { speed: number; temp: number };
+      if (data !== undefined) {
+        setspeed(data.speed);
+        settemprature(data.temp);
+      } else {
+        console.log("undefined data");
+      }
+    };
+    ws.onerror = (ev: ErrorEvent) => {
+      console.log(ev);
+    };
+  }, []);
   const renderItem = ({ item }) => (
     <FactoryEquipmentCard
       navigation={navigation}
       name={item.machineName}
       icon={item.icon}
+      speed={speed}
+      temprature={temparature}
     />
   );
   const { data, isSuccess, isError, error } =

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Switch, useTheme } from "react-native-paper";
 import { Dimensions, TouchableOpacity } from "react-native";
 import VectorIcon from "../../assets/icons/VectorIcons";
@@ -7,10 +7,13 @@ import { Text, StyleSheet } from "react-native";
 import { screen_names } from "../../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SOCKET_URL } from "@env";
 
 type FactoryEquipmentCardProp = {
   name: string;
   icon: Icon;
+  speed: number;
+  temprature: number;
   navigation: NativeStackNavigationProp<
     ParamListBase,
     screen_names.HOME,
@@ -19,8 +22,6 @@ type FactoryEquipmentCardProp = {
 };
 
 const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
-  const [temparature, settemprature] = useState<number>(25);
-  const [speed, setspeed] = useState<number>(50);
   const { colors } = useTheme();
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [containerColor, setContainerColor] = useState<string>(
@@ -37,6 +38,15 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
       setIconColor(colors.onPrimary);
     }
   };
+  let temp: number;
+  let speed: number;
+  if (isSwitchOn) {
+    temp = props.temprature;
+    speed = props.speed;
+  } else {
+    temp = 0;
+    speed = 0;
+  }
   return (
     <TouchableOpacity
       style={[styles.equipmentcard, { backgroundColor: containerColor }]}
@@ -52,7 +62,7 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
         color={iconColor}
         iconstyle={{ margin: 5 }}
       />
-      <Text style={styles.datatext}> {temparature}° C</Text>
+      <Text style={styles.datatext}> {temp}° C</Text>
       <Text style={styles.datatext}> {speed} m/s </Text>
       <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
     </TouchableOpacity>
