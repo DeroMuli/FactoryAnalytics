@@ -13,7 +13,6 @@ export const apiSlice = createApi({
         method: "GET",
         prepareHeaders: (headers) => {
           headers.set("Content-Type", "application/json");
-          headers.set("Cache-Control", "no-store");
           return headers;
         },
       }),
