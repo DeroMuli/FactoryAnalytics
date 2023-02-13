@@ -8,12 +8,13 @@ import { screen_names } from "../../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SOCKET_URL } from "@env";
+import usewebsocketdata from "../../hooks/usewebsocketdata";
 
 type FactoryEquipmentCardProp = {
   name: string;
   icon: Icon;
+  temp: number;
   speed: number;
-  temprature: number;
   navigation: NativeStackNavigationProp<
     ParamListBase,
     screen_names.HOME,
@@ -41,7 +42,7 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
   let temp: number;
   let speed: number;
   if (isSwitchOn) {
-    temp = props.temprature;
+    temp = props.temp;
     speed = props.speed;
   } else {
     temp = 0;
