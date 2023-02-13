@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SOCKET_URL } from "@env";
 
 type Data = {
@@ -24,6 +24,7 @@ export default (): Data => {
     ws.onerror = (ev: ErrorEvent) => {
       console.log(ev);
     };
+    return ws.close();
   }, []);
   return data;
 };
