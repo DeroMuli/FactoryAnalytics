@@ -5,6 +5,7 @@ import colors from "../constants/colors";
 import properties from "../constants/Properties";
 import { LineChart, Grid } from "react-native-svg-charts";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
+import { useSocket } from "../context/SocketContext";
 
 export type DataType = "General" | "Speed" | "Temprature";
 
@@ -51,9 +52,9 @@ const EquipmentAnalytics = (): JSX.Element => {
 
 type SpecificDataAnalyticsProp = { datatype: DataType };
 const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
-  const [graphdata, setgraphdata] = useState<number[]>([
-    50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 60,
-  ]);
+  const real_time_data = useSocket();
+  const graphdata = real_time_data.graph.speedgraph;
+  console.log(graphdata.toArray());
   if (props.datatype === "General") {
     return (
       <View style={styles.generalStatsContainer}>
@@ -93,7 +94,7 @@ const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
     return (
       <LineChart
         style={styles.lineChartContainer}
-        data={graphdata}
+        data={graphdata.toArray()}
         svg={{ stroke: "rgb(134, 65, 244)" }}
         contentInset={{ top: 20, bottom: 20 }}
       >

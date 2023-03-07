@@ -8,8 +8,7 @@ import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
 import colors from "../constants/colors";
 import { ActivityIndicator } from "react-native-paper";
 import { useGetFactoryEquipmentsDataQuery } from "../state/apislicer";
-import { SOCKET_URL } from "@env";
-import usewebsocketdata from "../hooks/usewebsocketdata";
+import { useSocket } from "../context/SocketContext";
 
 type equipment_card_item_data = {
   id: number;
@@ -32,14 +31,14 @@ export type fetcheddata_schema = {
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
-  const real_time_data = usewebsocketdata();
+  const real_time_data = useSocket();
   const renderItem = ({ item }) => (
     <FactoryEquipmentCard
       navigation={navigation}
       name={item.machineName}
       icon={item.icon}
-      speed={real_time_data.speed}
-      temp={real_time_data.temp}
+      speed={real_time_data.data.speed}
+      temp={real_time_data.data.temp}
     />
   );
   const { data, isSuccess, isError, error } =

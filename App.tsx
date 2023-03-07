@@ -11,6 +11,7 @@ import { Appearance } from "react-native";
 import { useColorScheme } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./src/state/store";
+import SocketProvider from "./src/context/SocketContext";
 
 export default function App(): JSX.Element {
   const [theme, setTheme] =
@@ -31,7 +32,9 @@ export default function App(): JSX.Element {
     <PaperProvider theme={theme}>
       <Provider store={store}>
         <NavigationContainer>
-          <MainNavigator />
+          <SocketProvider>
+            <MainNavigator />
+          </SocketProvider>
         </NavigationContainer>
       </Provider>
     </PaperProvider>
