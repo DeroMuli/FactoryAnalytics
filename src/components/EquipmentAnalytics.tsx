@@ -6,7 +6,7 @@ import properties from "../constants/Properties";
 import { LineChart, Grid } from "react-native-svg-charts";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
 
-export type DataType = "General" | "Speed" | "Torque" | "Temprature";
+export type DataType = "General" | "Speed" | "Temprature";
 
 const EquipmentAnalytics = (): JSX.Element => {
   const [chartOrcard, setchartorcard] = useState<DataType>("General");
@@ -32,16 +32,6 @@ const EquipmentAnalytics = (): JSX.Element => {
         >
           {" "}
           speed{" "}
-        </Chip>
-        <Chip
-          style={styles.chip}
-          icon="information"
-          onPress={() => {
-            setchartorcard("Torque");
-          }}
-        >
-          {" "}
-          torque{" "}
         </Chip>
         <Chip
           style={styles.chip}
