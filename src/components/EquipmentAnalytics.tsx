@@ -6,6 +6,7 @@ import properties from "../constants/Properties";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
 import { useSocket } from "../context/SocketContext";
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
+import { DomainPropType } from "victory-core";
 import EquipmentScreenHeading from "./EquipmentScreenHeading";
 
 export type DataType = "General" | "Speed" | "Temprature";
@@ -54,7 +55,15 @@ const EquipmentAnalytics = (): JSX.Element => {
 type SpecificDataAnalyticsProp = { datatype: DataType };
 const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
   const real_time_data = useSocket();
-  const graphdata = real_time_data.graph.speedgraph;
+  let graphdata =
+    props.datatype === "Speed"
+      ? real_time_data.graph.speedgraph
+      : real_time_data.graph.tempgraph;
+  let domain: DomainPropType =
+    props.datatype === "Temprature"
+      ? { x: [0, 9], y: [10, 40] }
+      : { x: [0, 9], y: [100, 150] };
+  let heading = props.datatype === "Speed" ? "Speed" : "Temprature";
   if (props.datatype === "General") {
     return (
       <View style={styles.generalStatsContainer}>
@@ -93,19 +102,15 @@ const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
   } else {
     return (
       <View style={{ margin: 5 }}>
-        <EquipmentScreenHeading heading={"Temparature"} marginvertical={0} />
+        <EquipmentScreenHeading heading={heading} marginvertical={0} />
         <VictoryChart theme={VictoryTheme.material} height={300}>
           <VictoryLine
+            interpolation="natural"
             style={{
               data: { stroke: "rgb(134, 65, 244)" },
             }}
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 5 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 },
-            ]}
+            data={graphdata}
+            domain={domain}
           />
         </VictoryChart>
       </View>
