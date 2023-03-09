@@ -3,9 +3,10 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { Chip, useTheme } from "react-native-paper";
 import colors from "../constants/colors";
 import properties from "../constants/Properties";
-import { LineChart, Grid } from "react-native-svg-charts";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
 import { useSocket } from "../context/SocketContext";
+import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
+import EquipmentScreenHeading from "./EquipmentScreenHeading";
 
 export type DataType = "General" | "Speed" | "Temprature";
 
@@ -54,7 +55,6 @@ type SpecificDataAnalyticsProp = { datatype: DataType };
 const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
   const real_time_data = useSocket();
   const graphdata = real_time_data.graph.speedgraph;
-  console.log(graphdata.toArray());
   if (props.datatype === "General") {
     return (
       <View style={styles.generalStatsContainer}>
@@ -92,14 +92,23 @@ const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
     );
   } else {
     return (
-      <LineChart
-        style={styles.lineChartContainer}
-        data={graphdata.toArray()}
-        svg={{ stroke: "rgb(134, 65, 244)" }}
-        contentInset={{ top: 20, bottom: 20 }}
-      >
-        <Grid />
-      </LineChart>
+      <View style={{ margin: 5 }}>
+        <EquipmentScreenHeading heading={"Temparature"} marginvertical={0} />
+        <VictoryChart theme={VictoryTheme.material} height={300}>
+          <VictoryLine
+            style={{
+              data: { stroke: "rgb(134, 65, 244)" },
+            }}
+            data={[
+              { x: 1, y: 2 },
+              { x: 2, y: 3 },
+              { x: 3, y: 5 },
+              { x: 4, y: 4 },
+              { x: 5, y: 7 },
+            ]}
+          />
+        </VictoryChart>
+      </View>
     );
   }
 };

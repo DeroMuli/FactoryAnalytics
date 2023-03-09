@@ -5,10 +5,12 @@ import { useTheme } from "react-native-paper";
 
 type EquipmentScreenHeadingProps = {
   heading: string;
+  marginvertical?: number;
 };
 
 const EquipmentScreenHeading = (props: EquipmentScreenHeadingProps) => {
-  const { fonts, colors } = useTheme();
+  const { fonts } = useTheme();
+  let marginvertical = props.marginvertical ? props.marginvertical : 10;
   return (
     <Text
       style={{
@@ -17,7 +19,7 @@ const EquipmentScreenHeading = (props: EquipmentScreenHeadingProps) => {
         fontWeight: "bold",
         color: definedcolor.HeadingColor,
         alignSelf: "center",
-        marginVertical: 10,
+        marginVertical: marginvertical,
         textDecorationLine: "underline",
       }}
     >
