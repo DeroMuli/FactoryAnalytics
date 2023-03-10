@@ -1,4 +1,10 @@
-import { useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { SOCKET_URL } from "@env";
 import { RingBuffer } from "ring-buffer-ts";
 
@@ -19,9 +25,8 @@ type Data = {
 
 export default (): Data => {
   const [data, setData] = useState<ReceivedData>({ temp: 0, speed: 0 });
-  let ws = new WebSocket(SOCKET_URL);
-  const temp_ring_buffer = new RingBuffer<number>(10);
-  const speed_ring_buffer = new RingBuffer<number>(10);
+  const temp_ring_buffer = useRef<RingBuffer<number>>(new RingBuffer(10));
+  const speed_ring_buffer = useRef<RingBuffer<number>>(new RingBuffer(10));
   const [tempgraph, setTempGraph] = useState<Array<{ x: number; y: number }>>(
     []
   );
@@ -29,32 +34,42 @@ export default (): Data => {
     []
   );
 
-  useEffect(() => {
+  const onMessageCallback = useCallback((event: MessageEvent) => {
+    let data = JSON.parse(event.data) as { speed: number; temp: number };
+    if (data !== undefined) {
+      setData(data);
+      temp_ring_buffer.current.add(data.temp);
+      let new_tempgraph = temp_ring_buffer.current
+        .toArray()
+        .map((value, index) => {
+          return { x: index, y: value };
+        });
+      setTempGraph(new_tempgraph);
+      speed_ring_buffer.current.add(data.speed);
+      let new_speedgraph = speed_ring_buffer.current
+        .toArray()
+        .map((value, index) => {
+          return { x: index, y: value };
+        });
+      setSpeedGraph(new_speedgraph);
+    } else {
+      console.log("undefined data");
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    const ws = new WebSocket(SOCKET_URL);
     ws.onopen = () => {
       console.log("connected");
     };
-    ws.onmessage = (event: MessageEvent) => {
-      let data = JSON.parse(event.data) as { speed: number; temp: number };
-      if (data !== undefined) {
-        setData(data);
-        temp_ring_buffer.add(data.temp);
-        let new_tempgraph = temp_ring_buffer.toArray().map((value, index) => {
-          return { x: index, y: value };
-        });
-        setTempGraph(new_tempgraph);
-        speed_ring_buffer.add(data.speed);
-        let new_speedgraph = speed_ring_buffer.toArray().map((value, index) => {
-          return { x: index, y: value };
-        });
-        setSpeedGraph(new_speedgraph);
-      } else {
-        console.log("undefined data");
-      }
-    };
+    ws.onmessage = onMessageCallback;
     ws.onerror = (ev: ErrorEvent) => {
       console.log(ev);
     };
-    return ws.close();
-  }, []);
+    return () => {
+      ws.close();
+    };
+  }, [onMessageCallback]);
+
   return { data, graph: { tempgraph, speedgraph } };
 };
