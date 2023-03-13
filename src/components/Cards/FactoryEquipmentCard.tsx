@@ -14,6 +14,7 @@ import usewebsocketdata from "../../hooks/usewebsocketdata";
 type FactoryEquipmentCardProp = {
   name: string;
   icon: Icon;
+  realtimefragment: JSX.Element;
   navigation: NativeStackNavigationProp<
     ParamListBase,
     screen_names.HOME,
@@ -57,7 +58,7 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
         iconstyle={{ margin: 5 }}
       />
       {isSwitchOn ? (
-        <RealTimeDisplayFragment />
+        props.realtimefragment
       ) : (
         <>
           <Text style={styles.datatext}> 0° C</Text>

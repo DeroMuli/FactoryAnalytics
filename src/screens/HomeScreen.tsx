@@ -31,13 +31,16 @@ export type fetcheddata_schema = {
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
-  const renderItem = ({ item }) => (
-    <FactoryEquipmentCard
-      navigation={navigation}
-      name={item.machineName}
-      icon={item.icon}
-    />
-  );
+  const renderItem = ({ item }) => {
+    return (
+      <FactoryEquipmentCard
+        navigation={navigation}
+        name={item.machineName}
+        icon={item.icon}
+        realtimefragment={<RealTimeDisplayFragment />}
+      />
+    );
+  };
   const { data, isSuccess, isError, error } =
     useGetFactoryEquipmentsDataQuery();
   let content: JSX.Element = (
