@@ -11,7 +11,7 @@ import { Appearance } from "react-native";
 import { useColorScheme } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./src/state/store";
-import SocketProvider from "./src/context/SocketContext";
+import SocketProvider from "./src/context/MockSocketContext";
 
 export default function App(): JSX.Element {
   const [theme, setTheme] =

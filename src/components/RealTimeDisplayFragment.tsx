@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Text, StyleSheet } from "react-native";
-import { useSocket } from "../context/SocketContext";
+import { useSocket } from "../context/MockSocketContext";
 
 const RealTimeDisplayFragment = () => {
   useEffect(() => {

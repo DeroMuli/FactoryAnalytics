@@ -7,9 +7,6 @@ import { Text, StyleSheet } from "react-native";
 import { screen_names } from "../../constants/ScreenNames";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import RealTimeDisplayFragment from "../RealTimeDisplayFragment";
-import { SOCKET_URL } from "@env";
-import usewebsocketdata from "../../hooks/usewebsocketdata";
 
 type FactoryEquipmentCardProp = {
   name: string;

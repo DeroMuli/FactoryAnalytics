@@ -5,7 +5,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { SOCKET_URL } from "@env";
 import { RingBuffer } from "ring-buffer-ts";
 
 type ReceivedData = {
@@ -23,7 +22,8 @@ type Data = {
   graph: GraphData;
 };
 
-export default (): Data => {
+export default (url: string): Data => {
+  const ws = new WebSocket(url);
   const [data, setData] = useState<ReceivedData>({ temp: 0, speed: 0 });
   const temp_ring_buffer = useRef<RingBuffer<number>>(new RingBuffer(10));
   const speed_ring_buffer = useRef<RingBuffer<number>>(new RingBuffer(10));
@@ -58,7 +58,6 @@ export default (): Data => {
   }, []);
 
   useLayoutEffect(() => {
-    const ws = new WebSocket(SOCKET_URL);
     ws.onopen = () => {
       console.log("connected");
     };
@@ -70,6 +69,8 @@ export default (): Data => {
       ws.close();
     };
   }, [onMessageCallback]);
+
+  const sendmessage = (message: string) => {};
 
   return { data, graph: { tempgraph, speedgraph } };
 };

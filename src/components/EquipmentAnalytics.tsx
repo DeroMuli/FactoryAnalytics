@@ -4,7 +4,7 @@ import { Chip, useTheme } from "react-native-paper";
 import colors from "../constants/colors";
 import properties from "../constants/Properties";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
-import { useSocket } from "../context/SocketContext";
+import { useSocket } from "../context/MockSocketContext";
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { DomainPropType } from "victory-core";
 import EquipmentScreenHeading from "./EquipmentScreenHeading";
