@@ -37,7 +37,9 @@ const HomeScreen = ({
         navigation={navigation}
         name={item.machineName}
         icon={item.icon}
-        realtimefragment={<RealTimeDisplayFragment />}
+        realtimefragment={
+          <RealTimeDisplayFragment mock={item.machineName != "Test Machine"} />
+        }
       />
     );
   };

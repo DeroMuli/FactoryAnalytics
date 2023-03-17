@@ -4,7 +4,7 @@ import { Chip, useTheme } from "react-native-paper";
 import colors from "../constants/colors";
 import properties from "../constants/Properties";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
-import { useSocket } from "../context/MockSocketContext";
+import { useMockSocket } from "../context/MockSocketContext";
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { DomainPropType } from "victory-core";
 import EquipmentScreenHeading from "./EquipmentScreenHeading";
@@ -54,7 +54,7 @@ const EquipmentAnalytics = (): JSX.Element => {
 
 type SpecificDataAnalyticsProp = { datatype: DataType };
 const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
-  const real_time_data = useSocket();
+  const real_time_data = useMockSocket();
   let graphdata =
     props.datatype === "Speed"
       ? real_time_data.graph.speedgraph

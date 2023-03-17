@@ -11,6 +11,7 @@ import EquipmentAnalytics from "../components/EquipmentAnalytics";
 
 const EquipmentScreen = ({
   navigation,
+  route,
 }: NativeStackScreenProps<
   ParamListBase,
   screen_names.EQUIPMENT,

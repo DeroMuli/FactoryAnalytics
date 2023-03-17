@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Text, StyleSheet } from "react-native";
-import { useSocket } from "../context/MockSocketContext";
+import { useMockSocket } from "../context/MockSocketContext";
+import { useTestSocket } from "../context/TestSocketContext";
 
-const RealTimeDisplayFragment = () => {
+const RealTimeDisplayFragment = (props: { mock: boolean }) => {
   useEffect(() => {
     console.log("RealTimeDisplayFragment mounted");
   }, []);
-  const real_time_data = useSocket();
+  const real_time_data = props.mock ? useMockSocket() : useTestSocket();
   let temp = real_time_data.data.temp;
   let speed = real_time_data.data.speed;
   return (
