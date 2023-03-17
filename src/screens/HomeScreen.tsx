@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen_names } from "../constants/ScreenNames";
-import { ParamListBase } from "@react-navigation/native";
+import { RootStackParamList } from "../types/navigation";
 import { FlatList, View } from "react-native";
 import { StyleSheet, SafeAreaView, Text } from "react-native";
 import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
@@ -30,7 +30,11 @@ export type fetcheddata_schema = {
 
 const HomeScreen = ({
   navigation,
-}: NativeStackScreenProps<ParamListBase, screen_names.HOME, undefined>) => {
+}: NativeStackScreenProps<
+  RootStackParamList,
+  screen_names.HOME,
+  undefined
+>) => {
   const renderItem = ({ item }) => {
     return (
       <FactoryEquipmentCard

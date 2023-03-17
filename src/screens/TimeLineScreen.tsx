@@ -2,7 +2,7 @@ import React from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlatList, StyleProp, ViewStyle } from "react-native";
 import { screen_names } from "../constants/ScreenNames";
-import { ParamListBase } from "@react-navigation/native";
+import { RootStackParamList } from "../types/navigation";
 import { SafeAreaView } from "react-native";
 import colors from "../constants/colors";
 import FancySeparator from "../assets/icons/FancySeparator";
@@ -64,7 +64,11 @@ const DATA: (TimeLineEventCardProps & { id: string })[] = [
 
 const TimeLineScreen = ({
   navigation,
-}: NativeStackScreenProps<ParamListBase, screen_names.TIMELINE, undefined>) => {
+}: NativeStackScreenProps<
+  RootStackParamList,
+  screen_names.TIMELINE,
+  undefined
+>) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FlatList

@@ -3,11 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen_names } from "../constants/ScreenNames";
 import BottomTabNavigator from "./BottomTabsNavigator";
 import EquipmentScreen from "../screens/EquipmentScreen";
+import { RootStackParamList } from "../types/navigation";
 
-type RootStackParamList = {
-  Tabs: undefined;
-  Equipment: { Equipemt_name: string };
-};
 const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function MainNavigator(): JSX.Element {
   return (
