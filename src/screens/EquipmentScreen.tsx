@@ -8,6 +8,7 @@ import EquipmentInformationTable from "../components/EquipmentInformationTable";
 import colors from "../constants/colors";
 import EquipmentAnalytics from "../components/EquipmentAnalytics";
 import { RootStackParamList } from "../types/navigation";
+import MockedorTestProvider from "../context/MockedorTestContext";
 
 const EquipmentScreen = ({
   navigation,
@@ -17,16 +18,19 @@ const EquipmentScreen = ({
   screen_names.EQUIPMENT,
   undefined
 >) => {
+  const mocked: boolean = route.params.Equipemt_name != "Test machine";
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <EquipmentScreenHeading heading="ANALYTICS" />
-        <EquipmentAnalytics />
-        <EquipmentScreenHeading heading="EQUIPMENT INFORMARTION" />
-        <EquipmentInformationTable />
-        <EquipmentScreenHeading heading="SPEED CONTROL" />
-        <SpeedControlComponent />
-      </ScrollView>
+      <MockedorTestProvider isMocked={mocked}>
+        <ScrollView>
+          <EquipmentScreenHeading heading="ANALYTICS" />
+          <EquipmentAnalytics />
+          <EquipmentScreenHeading heading="EQUIPMENT INFORMARTION" />
+          <EquipmentInformationTable />
+          <EquipmentScreenHeading heading="SPEED CONTROL" />
+          <SpeedControlComponent />
+        </ScrollView>
+      </MockedorTestProvider>
     </SafeAreaView>
   );
 };

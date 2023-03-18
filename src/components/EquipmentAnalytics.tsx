@@ -8,6 +8,8 @@ import { useMockSocket } from "../context/MockSocketContext";
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { DomainPropType } from "victory-core";
 import EquipmentScreenHeading from "./EquipmentScreenHeading";
+import { IsMocked } from "../context/MockedorTestContext";
+import { useTestSocket } from "../context/TestSocketContext";
 
 export type DataType = "General" | "Speed" | "Temprature";
 
@@ -54,7 +56,7 @@ const EquipmentAnalytics = (): JSX.Element => {
 
 type SpecificDataAnalyticsProp = { datatype: DataType };
 const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
-  const real_time_data = useMockSocket();
+  const real_time_data = IsMocked() ? useMockSocket() : useTestSocket();
   let graphdata =
     props.datatype === "Speed"
       ? real_time_data.graph.speedgraph
