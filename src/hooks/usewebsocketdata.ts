@@ -17,9 +17,15 @@ type GraphData = {
   speedgraph: Array<{ x: number; y: number }>;
 };
 
+type WebsocketMessageSchema = {
+  action: string;
+  payload: string;
+};
+
 type Data = {
   data: ReceivedData;
   graph: GraphData;
+  sendmessage: (message: WebsocketMessageSchema) => void;
 };
 
 export default (url: string): Data => {
@@ -60,6 +66,7 @@ export default (url: string): Data => {
   useLayoutEffect(() => {
     ws.onopen = () => {
       console.log("connected");
+      ws.send(JSON.stringify({ type: "subscribe" }));
     };
     ws.onmessage = onMessageCallback;
     ws.onerror = (ev: ErrorEvent) => {
@@ -70,7 +77,16 @@ export default (url: string): Data => {
     };
   }, [onMessageCallback]);
 
-  const sendmessage = (message: string) => {};
+  const sendmessage = (message: WebsocketMessageSchema) => {
+    console.log(message);
+    try {
+      const json_message = JSON.stringify(message);
+      ws.send(json_message);
+    } catch (e) {
+      //add a logger
+      console.log(e);
+    }
+  };
 
-  return { data, graph: { tempgraph, speedgraph } };
+  return { data, graph: { tempgraph, speedgraph }, sendmessage };
 };

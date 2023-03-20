@@ -4,19 +4,36 @@ import { ProgressCircle } from "react-native-svg-charts";
 import { Slider } from "@miblanchard/react-native-slider";
 import { Switch } from "react-native-paper";
 import { StyleSheet, Text, View } from "react-native";
+import { IsMocked } from "../context/MockedorTestContext";
+import { useMockSocket } from "../context/MockSocketContext";
+import { useTestSocket } from "../context/TestSocketContext";
 
 const SpeedControlComponent = () => {
   const { fonts, colors } = useTheme();
   const [speed, setspeed] = useState<number>(0);
   const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const { sendmessage } = IsMocked() ? useMockSocket() : useTestSocket();
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
     if (isSwitchOn) {
       setspeed(0);
+      sendmessage({
+        action: "toggle",
+        payload: "OFF",
+      });
+    } else {
+      sendmessage({
+        action: "toggle",
+        payload: "ON",
+      });
     }
   };
   const speedchanged = (value: number | number[]) => {
     let num = value[0];
+    sendmessage({
+      action: "set_speed",
+      payload: (num * 2.55).toString(),
+    });
     setspeed(num);
   };
   return (
