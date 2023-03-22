@@ -4,17 +4,32 @@ import { Chip, useTheme } from "react-native-paper";
 import colors from "../constants/colors";
 import properties from "../constants/Properties";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
-import { useMockSocket } from "../context/MockSocketContext";
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { DomainPropType } from "victory-core";
 import EquipmentScreenHeading from "./EquipmentScreenHeading";
 import { IsMocked } from "../context/MockedorTestContext";
-import { useTestSocket } from "../context/TestSocketContext";
+import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
 
 export type DataType = "General" | "Speed" | "Temprature";
 
 const EquipmentAnalytics = (): JSX.Element => {
   const [chartOrcard, setchartorcard] = useState<DataType>("General");
+  const url: string = IsMocked() ? MOCK_SOCKET_URL : TEST_MACHINE_SOCKET_URL;
+  const ws = new WebSocket(url);
+  useEffect(() => {
+    ws.onopen = () => {
+      //add logging and monitoring
+      console.log("connected");
+    };
+    ws.onerror = (event) => {
+      //add logging and monitoring
+      console.log("error");
+      console.log(event);
+    };
+    return () => {
+      ws.close();
+    };
+  }, []);
   return (
     <>
       <ScrollView style={styles.chipscroll} horizontal>
@@ -49,23 +64,57 @@ const EquipmentAnalytics = (): JSX.Element => {
           temprature{" "}
         </Chip>
       </ScrollView>
-      <SpecificDataAnalytics datatype={chartOrcard} />
+      <SpecificDataAnalytics datatype={chartOrcard} ws={ws} />
     </>
   );
 };
 
-type SpecificDataAnalyticsProp = { datatype: DataType };
+type SpecificDataAnalyticsProp = { datatype: DataType; ws: WebSocket };
+
 const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
-  const real_time_data = IsMocked() ? useMockSocket() : useTestSocket();
-  let graphdata =
-    props.datatype === "Speed"
-      ? real_time_data.graph.speedgraph
-      : real_time_data.graph.tempgraph;
-  let domain: DomainPropType =
-    props.datatype === "Temprature"
-      ? { x: [0, 9], y: [10, 40] }
-      : { x: [0, 9], y: [100, 150] };
-  let heading = props.datatype === "Speed" ? "Speed" : "Temprature";
+  const [graphdata, setgraphdata] = useState<Array<{ x: number; y: number }>>([
+    { x: 0, y: 0 },
+  ]);
+  const [domain, setdomain] = useState<DomainPropType>({
+    x: [0, 10],
+    y: [0, 10],
+  });
+  const heading: string = props.datatype === "Speed" ? "Speed" : "Temprature";
+  let grapharray: Array<number> = [];
+
+  useEffect(() => {
+    if (props.datatype === "General") return;
+
+    console.log("new graph");
+    console.log(grapharray.length);
+    setgraphdata([{ x: 0, y: 0 }]);
+    if (props.datatype === "Speed") {
+      setdomain({ x: [0, 9], y: [100, 150] });
+    } else {
+      setdomain({ x: [0, 9], y: [10, 40] });
+    }
+    props.ws.onmessage = (event: MessageEvent) => {
+      const data = JSON.parse(event.data) as { speed: number; temp: number };
+      const newvalue = props.datatype === "Speed" ? data.speed : data.temp;
+      if (grapharray.length == 10) {
+        grapharray.shift();
+        grapharray.push(newvalue);
+      } else {
+        grapharray.push(newvalue);
+      }
+      console.log(grapharray.length);
+      const newgraphdata = grapharray.map((value, index) => {
+        return { x: index, y: value };
+      });
+
+      setgraphdata(newgraphdata);
+    };
+    return () => {
+      grapharray = [];
+      props.ws.onmessage = () => {};
+    };
+  }, [props.datatype]);
+
   if (props.datatype === "General") {
     return (
       <View style={styles.generalStatsContainer}>
