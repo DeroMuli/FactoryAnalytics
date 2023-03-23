@@ -6,7 +6,7 @@ import SpeedControlComponent from "../components/SpeedControlComponent";
 import EquipmentScreenHeading from "../components/EquipmentScreenHeading";
 import EquipmentInformationTable from "../components/EquipmentInformationTable";
 import colors from "../constants/colors";
-import EquipmentAnalytics from "../components/StatsDisplayFragment";
+import StatsDisplayFragment from "../components/StatsDisplayFragment";
 import { RootStackParamList } from "../types/navigation";
 import MockedorTestProvider from "../context/MockedorTestContext";
 
@@ -24,7 +24,7 @@ const EquipmentScreen = ({
       <MockedorTestProvider isMocked={mocked}>
         <ScrollView>
           <EquipmentScreenHeading heading="ANALYTICS" />
-          <EquipmentAnalytics />
+          <StatsDisplayFragment />
           <EquipmentScreenHeading heading="EQUIPMENT INFORMARTION" />
           <EquipmentInformationTable />
           <EquipmentScreenHeading heading="SPEED CONTROL" />

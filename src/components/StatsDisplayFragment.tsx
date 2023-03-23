@@ -12,7 +12,7 @@ import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
 
 export type DataType = "General" | "Speed" | "Temprature";
 
-const EquipmentAnalytics = (): JSX.Element => {
+const StatsDisplayFragment = (): JSX.Element => {
   const [chartOrcard, setchartorcard] = useState<DataType>("General");
   const url: string = IsMocked() ? MOCK_SOCKET_URL : TEST_MACHINE_SOCKET_URL;
   const ws = new WebSocket(url);
@@ -199,4 +199,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EquipmentAnalytics;
+export default StatsDisplayFragment;
