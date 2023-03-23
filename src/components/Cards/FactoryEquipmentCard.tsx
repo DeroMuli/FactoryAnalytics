@@ -5,45 +5,45 @@ import VectorIcon from "../../assets/icons/VectorIcons";
 import type { Icon } from "../../assets/icons/VectorIcons";
 import { Text, StyleSheet } from "react-native";
 import { screen_names } from "../../constants/ScreenNames";
-import { ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../types/navigation";
 
 type FactoryEquipmentCardProp = {
   name: string;
   icon: Icon;
-  realtimefragment: JSX.Element;
-  navigation: NativeStackNavigationProp<
-    ParamListBase,
-    screen_names.HOME,
-    undefined
-  >;
+  mean_speed: number;
+  mean_temp: number;
 };
 
 const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
-  useEffect(() => {
-    console.log("FactoryEquipmentCard.tsx: mounted");
-  }, []);
   const { colors } = useTheme();
   const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [containerColor, setContainerColor] = useState<string>(
     colors.onPrimaryContainer
   );
+  const [mean_temp, set_mean_temp] = useState<number>(props.mean_temp);
+  const [mean_speed, set_mean_speed] = useState<number>(props.mean_speed);
   const [iconColor, setIconColor] = useState<string>(colors.onPrimary);
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
     if (isSwitchOn) {
       setContainerColor(colors.onBackground);
       setIconColor(colors.onError);
+      set_mean_speed(0);
+      set_mean_temp(0);
     } else {
       setContainerColor(colors.onPrimaryContainer);
       setIconColor(colors.onPrimary);
+      set_mean_speed(props.mean_speed);
+      set_mean_temp(props.mean_temp);
     }
   };
   return (
     <TouchableOpacity
       style={[styles.equipmentcard, { backgroundColor: containerColor }]}
       onPress={() =>
-        props.navigation.navigate(screen_names.EQUIPMENT, {
+        navigation.navigate(screen_names.EQUIPMENT, {
           Equipemt_name: props.name,
         })
       }
@@ -54,14 +54,8 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
         color={iconColor}
         iconstyle={{ margin: 5 }}
       />
-      {isSwitchOn ? (
-        props.realtimefragment
-      ) : (
-        <>
-          <Text style={styles.datatext}> 0° C</Text>
-          <Text style={styles.datatext}> 0 m/s </Text>
-        </>
-      )}
+      <Text style={styles.datatext}> {mean_temp}° C</Text>
+      <Text style={styles.datatext}> {mean_speed}m/s </Text>
       <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
     </TouchableOpacity>
   );

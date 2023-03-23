@@ -8,12 +8,13 @@ import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
 import colors from "../constants/colors";
 import { ActivityIndicator } from "react-native-paper";
 import { useGetFactoryEquipmentsDataQuery } from "../state/apislicer";
-import RealTimeDisplayFragment from "../components/RealTimeDisplayFragment";
 
 type equipment_card_item_data = {
   id: number;
   machineName: string;
   icon: { iconlibrary: string; iconname: string };
+  mean_speed: number;
+  mean_temp: number;
 };
 
 export type fetcheddata_schema = {
@@ -28,22 +29,14 @@ export type fetcheddata_schema = {
   updatedAt: string;
 };
 
-const HomeScreen = ({
-  navigation,
-}: NativeStackScreenProps<
-  RootStackParamList,
-  screen_names.HOME,
-  undefined
->) => {
+const HomeScreen = () => {
   const renderItem = ({ item }) => {
     return (
       <FactoryEquipmentCard
-        navigation={navigation}
         name={item.machineName}
         icon={item.icon}
-        realtimefragment={
-          <RealTimeDisplayFragment mock={item.machineName != "Test Machine"} />
-        }
+        mean_speed={item.mean_speed}
+        mean_temp={item.mean_temp}
       />
     );
   };
@@ -66,6 +59,8 @@ const HomeScreen = ({
         id: item.id,
         machineName: item.name,
         icon: { iconlibrary: item.icon_library, iconname: item.icon_name },
+        mean_speed: item.mean_speed,
+        mean_temp: item.mean_temp,
       });
     });
     content = (

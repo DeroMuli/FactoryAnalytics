@@ -33,11 +33,7 @@ export default function App(): JSX.Element {
     <PaperProvider theme={theme}>
       <Provider store={store}>
         <NavigationContainer>
-          <MockSocketProvider>
-            <TestSocketProvider>
-              <MainNavigator />
-            </TestSocketProvider>
-          </MockSocketProvider>
+          <MainNavigator />
         </NavigationContainer>
       </Provider>
     </PaperProvider>

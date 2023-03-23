@@ -6,7 +6,7 @@ import SpeedControlComponent from "../components/SpeedControlComponent";
 import EquipmentScreenHeading from "../components/EquipmentScreenHeading";
 import EquipmentInformationTable from "../components/EquipmentInformationTable";
 import colors from "../constants/colors";
-import EquipmentAnalytics from "../components/EquipmentAnalytics";
+import EquipmentAnalytics from "../components/StatsDisplayFragment";
 import { RootStackParamList } from "../types/navigation";
 import MockedorTestProvider from "../context/MockedorTestContext";
 
