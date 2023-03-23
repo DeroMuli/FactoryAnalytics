@@ -64,14 +64,14 @@ const StatsDisplayFragment = (): JSX.Element => {
           temprature{" "}
         </Chip>
       </ScrollView>
-      <SpecificDataAnalytics datatype={chartOrcard} ws={ws} />
+      <GraphAndAnalyticsCardsDisplay datatype={chartOrcard} ws={ws} />
     </>
   );
 };
 
 type SpecificDataAnalyticsProp = { datatype: DataType; ws: WebSocket };
 
-const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
+const GraphAndAnalyticsCardsDisplay = (props: SpecificDataAnalyticsProp) => {
   const [graphdata, setgraphdata] = useState<Array<{ x: number; y: number }>>([
     { x: 0, y: 0 },
   ]);
@@ -81,43 +81,61 @@ const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
   });
   const heading: string = props.datatype === "Speed" ? "Speed" : "Temprature";
   let grapharray: Array<number> = [];
+  const [speed, setSpeed] = useState(0);
+  const [temp, setTemp] = useState(0);
 
   useEffect(() => {
-    if (props.datatype === "General") return;
-
-    console.log("new graph");
-    console.log(grapharray.length);
-    setgraphdata([{ x: 0, y: 0 }]);
-    if (props.datatype === "Speed") {
-      setdomain({ x: [0, 9], y: [100, 150] });
+    if (props.datatype === "General") {
+      props.ws.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data) as { speed: number; temp: number };
+        setSpeed(data.speed);
+        setTemp(data.temp);
+      };
     } else {
-      setdomain({ x: [0, 9], y: [10, 40] });
-    }
-    props.ws.onmessage = (event: MessageEvent) => {
-      const data = JSON.parse(event.data) as { speed: number; temp: number };
-      const newvalue = props.datatype === "Speed" ? data.speed : data.temp;
-      if (grapharray.length == 10) {
-        grapharray.shift();
-        grapharray.push(newvalue);
+      setgraphdata([{ x: 0, y: 0 }]);
+      if (props.datatype === "Speed") {
+        setdomain({ x: [0, 9], y: [100, 150] });
       } else {
-        grapharray.push(newvalue);
+        setdomain({ x: [0, 9], y: [10, 40] });
       }
-      console.log(grapharray.length);
-      const newgraphdata = grapharray.map((value, index) => {
-        return { x: index, y: value };
-      });
-
-      setgraphdata(newgraphdata);
-    };
+      props.ws.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data) as { speed: number; temp: number };
+        const newvalue = props.datatype === "Speed" ? data.speed : data.temp;
+        if (grapharray.length == 10) {
+          grapharray.shift();
+          grapharray.push(newvalue);
+        } else {
+          grapharray.push(newvalue);
+        }
+        const newgraphdata = grapharray.map((value, index) => {
+          return { x: index, y: value };
+        });
+        setgraphdata(newgraphdata);
+      };
+    }
     return () => {
       grapharray = [];
       props.ws.onmessage = () => {};
     };
   }, [props.datatype]);
-
   if (props.datatype === "General") {
     return (
       <View style={styles.generalStatsContainer}>
+        <GeneralStatsCard
+          units="°c"
+          dataTypeString="Temprature"
+          dataValue={temp}
+          dataicon={{ iconlibrary: "FontAwesome", iconname: "thermometer" }}
+        />
+        <GeneralStatsCard
+          units="m/s"
+          dataTypeString="Speed"
+          dataValue={speed}
+          dataicon={{
+            iconlibrary: "MaterialCommunityIcons",
+            iconname: "speedometer",
+          }}
+        />
         <GeneralStatsCard
           units="days"
           dataTypeString="Healthy days"
@@ -125,27 +143,12 @@ const SpecificDataAnalytics = (props: SpecificDataAnalyticsProp) => {
           dataicon={{ iconlibrary: "AntDesign", iconname: "checkcircleo" }}
         />
         <GeneralStatsCard
-          units="°c"
-          dataTypeString="Average Temp"
-          dataValue={50}
-          dataicon={{ iconlibrary: "FontAwesome", iconname: "thermometer" }}
-        />
-        <GeneralStatsCard
-          units="m/s"
-          dataTypeString="Average Speed"
-          dataValue={30}
+          units=" "
+          dataTypeString="Health score"
+          dataValue={9}
           dataicon={{
-            iconlibrary: "MaterialCommunityIcons",
-            iconname: "speedometer",
-          }}
-        />
-        <GeneralStatsCard
-          units="N-m"
-          dataTypeString="Average Torque"
-          dataValue={25}
-          dataicon={{
-            iconlibrary: "MaterialCommunityIcons",
-            iconname: "axis-x-rotate-clockwise",
+            iconlibrary: "MaterialIcons",
+            iconname: "healing",
           }}
         />
       </View>
