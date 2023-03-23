@@ -1,23 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "react-native-paper";
 import { ProgressCircle } from "react-native-svg-charts";
 import { Slider } from "@miblanchard/react-native-slider";
 import { Switch } from "react-native-paper";
 import { StyleSheet, Text, View } from "react-native";
 import { IsMocked } from "../context/MockedorTestContext";
+import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
 
 const SpeedControlComponent = () => {
   const { fonts, colors } = useTheme();
   const [speed, setspeed] = useState<number>(0);
   const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const url: string = IsMocked() ? MOCK_SOCKET_URL : TEST_MACHINE_SOCKET_URL;
+  const ws = new WebSocket(url);
+  useEffect(() => {
+    ws.onopen = () => {
+      //add logging and monitoring
+      console.log("connected speed control");
+    };
+    ws.onerror = (event) => {
+      //add logging and monitoring
+      console.log("error");
+      console.log(event);
+    };
+    return () => {
+      console.log("closing speed control");
+      ws.close();
+    };
+  }, []);
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
     if (isSwitchOn) {
       setspeed(0);
+      ws.send(JSON.stringify({ action: "toggle", payload: "OFF" }));
+    } else {
+      ws.send(JSON.stringify({ action: "toggle", payload: "ON" }));
     }
   };
+  const sendnewspeed = (value: number | number[]) => {
+    let num = typeof value === "number" ? value : value[0];
+    //timeout added to prevent sending too many messages
+    setTimeout(() => {
+      try {
+        ws.send(
+          JSON.stringify({
+            action: "set_speed",
+            payload: (num * 2.55).toString(),
+          })
+        );
+      } catch (e) {
+        console.log(num);
+        console.log("error sending speed");
+        console.log(e.message);
+      }
+    }, 1000);
+  };
   const speedchanged = (value: number | number[]) => {
-    let num = value[0];
+    let num = typeof value === "number" ? value : value[0];
     setspeed(num);
   };
   return (
@@ -44,6 +83,7 @@ const SpeedControlComponent = () => {
       <Slider
         step={1}
         onValueChange={speedchanged}
+        onSlidingComplete={sendnewspeed}
         thumbTintColor={colors.onPrimary}
         minimumTrackTintColor={colors.onPrimary}
         minimumValue={0}
