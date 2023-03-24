@@ -6,12 +6,19 @@ import { Switch } from "react-native-paper";
 import { StyleSheet, Text, View } from "react-native";
 import { IsMocked } from "../context/MockedorTestContext";
 import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
+import { useAppDispatch, useAppSelector } from "../hooks/useTypedRedux";
+import { changequipmentstate } from "../state/equipmentstateslicer";
+import { getEquipemntName } from "../context/EquipmentNameContext";
 
 const SpeedControlComponent = () => {
   const { fonts, colors } = useTheme();
   const [speed, setspeed] = useState<number>(0);
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
   const url: string = IsMocked() ? MOCK_SOCKET_URL : TEST_MACHINE_SOCKET_URL;
+  const equipmentname = getEquipemntName();
+  const isOn = useAppSelector((state) => state.equipment).filter(
+    (item) => item.name == equipmentname
+  )[0].isOn;
+  const dispatch = useAppDispatch();
   const ws = new WebSocket(url);
   useEffect(() => {
     ws.onopen = () => {
@@ -29,8 +36,8 @@ const SpeedControlComponent = () => {
     };
   }, []);
   const onToggleSwitch = () => {
-    setIsSwitchOn(!isSwitchOn);
-    if (isSwitchOn) {
+    dispatch(changequipmentstate({ name: equipmentname, isOn: !isOn }));
+    if (isOn) {
       setspeed(0);
       ws.send(JSON.stringify({ action: "toggle", payload: "OFF" }));
     } else {
@@ -90,12 +97,12 @@ const SpeedControlComponent = () => {
         maximumValue={100}
         containerStyle={{ width: 150, height: 10, top: -130 }}
         value={speed}
-        disabled={!isSwitchOn}
+        disabled={!isOn}
       />
       <Switch
         color={colors.onPrimary}
         style={{ top: -130, marginTop: 5 }}
-        value={isSwitchOn}
+        value={isOn}
         onValueChange={onToggleSwitch}
       />
     </View>

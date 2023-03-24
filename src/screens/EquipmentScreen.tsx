@@ -9,6 +9,7 @@ import colors from "../constants/colors";
 import StatsDisplayFragment from "../components/StatsDisplayFragment";
 import { RootStackParamList } from "../types/navigation";
 import MockedorTestProvider from "../context/MockedorTestContext";
+import EquipmentNameProvider from "../context/EquipmentNameContext";
 
 const EquipmentScreen = ({
   navigation,
@@ -22,14 +23,16 @@ const EquipmentScreen = ({
   return (
     <SafeAreaView style={styles.container}>
       <MockedorTestProvider isMocked={mocked}>
-        <ScrollView>
-          <EquipmentScreenHeading heading="ANALYTICS" />
-          <StatsDisplayFragment />
-          <EquipmentScreenHeading heading="EQUIPMENT INFORMARTION" />
-          <EquipmentInformationTable />
-          <EquipmentScreenHeading heading="SPEED CONTROL" />
-          <SpeedControlComponent />
-        </ScrollView>
+        <EquipmentNameProvider equipmentname={route.params.Equipemt_name}>
+          <ScrollView>
+            <EquipmentScreenHeading heading="ANALYTICS" />
+            <StatsDisplayFragment />
+            <EquipmentScreenHeading heading="EQUIPMENT INFORMARTION" />
+            <EquipmentInformationTable />
+            <EquipmentScreenHeading heading="SPEED CONTROL" />
+            <SpeedControlComponent />
+          </ScrollView>
+        </EquipmentNameProvider>
       </MockedorTestProvider>
     </SafeAreaView>
   );

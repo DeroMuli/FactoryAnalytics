@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./example";
 import { apiSlice } from "./apislicer";
+import equipmentReducer from "./equipmentstateslicer";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    equipment: equipmentReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

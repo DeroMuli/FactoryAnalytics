@@ -9,6 +9,8 @@ import { DomainPropType } from "victory-core";
 import EquipmentScreenHeading from "./EquipmentScreenHeading";
 import { IsMocked } from "../context/MockedorTestContext";
 import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
+import { getEquipemntName } from "../context/EquipmentNameContext";
+import { useAppSelector } from "../hooks/useTypedRedux";
 
 export type DataType = "General" | "Speed" | "Temprature";
 
@@ -83,41 +85,57 @@ const GraphAndAnalyticsCardsDisplay = (props: SpecificDataAnalyticsProp) => {
   let grapharray: Array<number> = [];
   const [speed, setSpeed] = useState(0);
   const [temp, setTemp] = useState(0);
-
+  const equipmentname = getEquipemntName();
+  const isOn = useAppSelector((state) => state.equipment).filter(
+    (item) => item.name == equipmentname
+  )[0].isOn;
   useEffect(() => {
-    if (props.datatype === "General") {
-      props.ws.onmessage = (event: MessageEvent) => {
-        const data = JSON.parse(event.data) as { speed: number; temp: number };
-        setSpeed(data.speed);
-        setTemp(data.temp);
-      };
+    if (isOn) {
+      if (props.datatype === "General") {
+        props.ws.onmessage = (event: MessageEvent) => {
+          const data = JSON.parse(event.data) as {
+            speed: number;
+            temp: number;
+          };
+          setSpeed(data.speed);
+          setTemp(data.temp);
+        };
+      } else {
+        setgraphdata([{ x: 0, y: 0 }]);
+        if (props.datatype === "Speed") {
+          setdomain({ x: [0, 9], y: [100, 150] });
+        } else {
+          setdomain({ x: [0, 9], y: [10, 40] });
+        }
+        props.ws.onmessage = (event: MessageEvent) => {
+          const data = JSON.parse(event.data) as {
+            speed: number;
+            temp: number;
+          };
+          const newvalue = props.datatype === "Speed" ? data.speed : data.temp;
+          if (grapharray.length == 10) {
+            grapharray.shift();
+            grapharray.push(newvalue);
+          } else {
+            grapharray.push(newvalue);
+          }
+          const newgraphdata = grapharray.map((value, index) => {
+            return { x: index, y: value };
+          });
+          setgraphdata(newgraphdata);
+        };
+      }
     } else {
       setgraphdata([{ x: 0, y: 0 }]);
-      if (props.datatype === "Speed") {
-        setdomain({ x: [0, 9], y: [100, 150] });
-      } else {
-        setdomain({ x: [0, 9], y: [10, 40] });
-      }
-      props.ws.onmessage = (event: MessageEvent) => {
-        const data = JSON.parse(event.data) as { speed: number; temp: number };
-        const newvalue = props.datatype === "Speed" ? data.speed : data.temp;
-        if (grapharray.length == 10) {
-          grapharray.shift();
-          grapharray.push(newvalue);
-        } else {
-          grapharray.push(newvalue);
-        }
-        const newgraphdata = grapharray.map((value, index) => {
-          return { x: index, y: value };
-        });
-        setgraphdata(newgraphdata);
-      };
+      setdomain({ x: [0, 10], y: [0, 10] });
+      setSpeed(0);
+      setTemp(0);
     }
     return () => {
       grapharray = [];
       props.ws.onmessage = () => {};
     };
-  }, [props.datatype]);
+  }, [props.datatype, isOn]);
   if (props.datatype === "General") {
     return (
       <View style={styles.generalStatsContainer}>

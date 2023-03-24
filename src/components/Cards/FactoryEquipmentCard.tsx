@@ -7,41 +7,42 @@ import { Text, StyleSheet } from "react-native";
 import { screen_names } from "../../constants/ScreenNames";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../types/navigation";
+import { useAppSelector, useAppDispatch } from "../../hooks/useTypedRedux";
+import { changequipmentstate } from "../../state/equipmentstateslicer";
 
 type FactoryEquipmentCardProp = {
   name: string;
   icon: Icon;
   mean_speed: number;
   mean_temp: number;
+  socket: WebSocket;
 };
 
 const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
   const { colors } = useTheme();
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const isOn = useAppSelector((state) => state.equipment).filter(
+    (item) => item.name == props.name
+  )[0].isOn;
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [containerColor, setContainerColor] = useState<string>(
-    colors.onPrimaryContainer
-  );
-  const [mean_temp, set_mean_temp] = useState<number>(props.mean_temp);
-  const [mean_speed, set_mean_speed] = useState<number>(props.mean_speed);
-  const [iconColor, setIconColor] = useState<string>(colors.onPrimary);
   const onToggleSwitch = () => {
-    setIsSwitchOn(!isSwitchOn);
-    if (isSwitchOn) {
-      setContainerColor(colors.onBackground);
-      setIconColor(colors.onError);
-      set_mean_speed(0);
-      set_mean_temp(0);
+    dispatch(changequipmentstate({ name: props.name, isOn: !isOn }));
+    if (isOn) {
+      props.socket.send(JSON.stringify({ action: "toggle", payload: "OFF" }));
     } else {
-      setContainerColor(colors.onPrimaryContainer);
-      setIconColor(colors.onPrimary);
-      set_mean_speed(props.mean_speed);
-      set_mean_temp(props.mean_temp);
+      props.socket.send(JSON.stringify({ action: "toggle", payload: "ON" }));
     }
   };
   return (
     <TouchableOpacity
-      style={[styles.equipmentcard, { backgroundColor: containerColor }]}
+      style={[
+        styles.equipmentcard,
+        {
+          backgroundColor: isOn
+            ? colors.onPrimaryContainer
+            : colors.onBackground,
+        },
+      ]}
       onPress={() =>
         navigation.navigate(screen_names.EQUIPMENT, {
           Equipemt_name: props.name,
@@ -51,12 +52,12 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
       <Text style={{ margin: 5, fontWeight: "bold" }}>{props.name}</Text>
       <VectorIcon
         icon={props.icon}
-        color={iconColor}
+        color={isOn ? colors.onPrimary : colors.onError}
         iconstyle={{ margin: 5 }}
       />
-      <Text style={styles.datatext}> {mean_temp}° C</Text>
-      <Text style={styles.datatext}> {mean_speed}m/s </Text>
-      <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+      <Text style={styles.datatext}> {props.mean_speed}° C</Text>
+      <Text style={styles.datatext}> {props.mean_temp}m/s </Text>
+      <Switch value={isOn} onValueChange={onToggleSwitch} />
     </TouchableOpacity>
   );
 };

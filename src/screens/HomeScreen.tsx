@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { screen_names } from "../constants/ScreenNames";
-import { RootStackParamList } from "../types/navigation";
+import { setEquipements } from "../state/equipmentstateslicer";
 import { FlatList, View } from "react-native";
 import { StyleSheet, SafeAreaView, Text } from "react-native";
 import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
 import colors from "../constants/colors";
 import { ActivityIndicator } from "react-native-paper";
 import { useGetFactoryEquipmentsDataQuery } from "../state/apislicer";
+import { useAppSelector, useAppDispatch } from "../hooks/useTypedRedux";
+import { equipmentState } from "../state/equipmentstateslicer";
+import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
 
 type equipment_card_item_data = {
   id: number;
@@ -30,6 +31,9 @@ export type fetcheddata_schema = {
 };
 
 const HomeScreen = () => {
+  const dispatch = useAppDispatch();
+  const Mock_Socket = new WebSocket(MOCK_SOCKET_URL);
+  const Test_Socket = new WebSocket(TEST_MACHINE_SOCKET_URL);
   const renderItem = ({ item }) => {
     return (
       <FactoryEquipmentCard
@@ -37,6 +41,7 @@ const HomeScreen = () => {
         icon={item.icon}
         mean_speed={item.mean_speed}
         mean_temp={item.mean_temp}
+        socket={item.machineName == "Test Machine" ? Test_Socket : Mock_Socket}
       />
     );
   };
@@ -63,6 +68,11 @@ const HomeScreen = () => {
         mean_temp: item.mean_temp,
       });
     });
+    const equipmentstate = new Array<equipmentState>();
+    equipmentdata.forEach((item) => {
+      equipmentstate.push({ name: item.machineName, isOn: true });
+    });
+    dispatch(setEquipements(equipmentstate));
     content = (
       <SafeAreaView style={styles.container}>
         <FlatList
