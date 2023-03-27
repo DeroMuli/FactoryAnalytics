@@ -119,8 +119,10 @@ const GraphAndAnalyticsCardsDisplay = (props: SpecificDataAnalyticsProp) => {
           } else {
             grapharray.push(newvalue);
           }
+          const length = grapharray.length;
           const newgraphdata = grapharray.map((value, index) => {
-            return { x: index, y: value };
+            let pos = length - (index + 1);
+            return { x: pos, y: value };
           });
           setgraphdata(newgraphdata);
         };
