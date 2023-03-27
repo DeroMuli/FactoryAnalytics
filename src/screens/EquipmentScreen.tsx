@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen_names } from "../constants/ScreenNames";
 import { StyleSheet, SafeAreaView, View, Text, ScrollView } from "react-native";
 import SpeedControlComponent from "../components/SpeedControlComponent";
-import EquipmentScreenHeading from "../components/EquipmentScreenHeading";
+import Heading from "../components/Headings";
 import EquipmentInformationTable from "../components/EquipmentInformationTable";
 import colors from "../constants/colors";
 import StatsDisplayFragment from "../components/StatsDisplayFragment";
@@ -25,11 +25,11 @@ const EquipmentScreen = ({
       <MockedorTestProvider isMocked={mocked}>
         <EquipmentNameProvider equipmentname={route.params.Equipemt_name}>
           <ScrollView>
-            <EquipmentScreenHeading heading="ANALYTICS" />
+            <Heading heading="ANALYTICS" />
             <StatsDisplayFragment />
-            <EquipmentScreenHeading heading="EQUIPMENT INFORMARTION" />
+            <Heading heading="EQUIPMENT INFORMARTION" />
             <EquipmentInformationTable />
-            <EquipmentScreenHeading heading="SPEED CONTROL" />
+            <Heading heading="SPEED CONTROL" />
             <SpeedControlComponent />
           </ScrollView>
         </EquipmentNameProvider>

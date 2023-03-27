@@ -6,7 +6,7 @@ import properties from "../constants/Properties";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { DomainPropType } from "victory-core";
-import EquipmentScreenHeading from "./EquipmentScreenHeading";
+import Heading from "./Headings";
 import { IsMocked } from "../context/MockedorTestContext";
 import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
 import { getEquipemntName } from "../context/EquipmentNameContext";
@@ -176,7 +176,7 @@ const GraphAndAnalyticsCardsDisplay = (props: SpecificDataAnalyticsProp) => {
   } else {
     return (
       <View style={{ margin: 5 }}>
-        <EquipmentScreenHeading heading={heading} marginvertical={0} />
+        <Heading heading={heading} marginvertical={0} />
         <VictoryChart theme={VictoryTheme.material} height={300}>
           <VictoryLine
             interpolation="natural"
