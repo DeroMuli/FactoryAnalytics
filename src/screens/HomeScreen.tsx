@@ -70,7 +70,8 @@ const HomeScreen = () => {
     });
     const equipmentstate = new Array<equipmentState>();
     equipmentdata.forEach((item) => {
-      equipmentstate.push({ name: item.machineName, isOn: true });
+      let isOn = item.machineName == "Test Machine" ? false : true;
+      equipmentstate.push({ name: item.machineName, isOn });
     });
     dispatch(setEquipements(equipmentstate));
     content = (

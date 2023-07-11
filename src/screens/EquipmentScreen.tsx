@@ -10,6 +10,7 @@ import StatsDisplayFragment from "../components/StatsDisplayFragment";
 import { RootStackParamList } from "../types/navigation";
 import MockedorTestProvider from "../context/MockedorTestContext";
 import EquipmentNameProvider from "../context/EquipmentNameContext";
+import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
 
 const EquipmentScreen = ({
   navigation,
@@ -19,7 +20,9 @@ const EquipmentScreen = ({
   screen_names.EQUIPMENT,
   undefined
 >) => {
-  const mocked: boolean = route.params.Equipemt_name != "Test machine";
+  const mocked: boolean = route.params.Equipemt_name !== "Test Machine";
+  const url: string = mocked ? MOCK_SOCKET_URL : TEST_MACHINE_SOCKET_URL;
+  const ws = new WebSocket(url);
   return (
     <SafeAreaView style={styles.container}>
       <MockedorTestProvider isMocked={mocked}>
@@ -30,7 +33,7 @@ const EquipmentScreen = ({
             <Heading heading="EQUIPMENT INFORMARTION" />
             <EquipmentInformationTable />
             <Heading heading="SPEED CONTROL" />
-            <SpeedControlComponent />
+            <SpeedControlComponent ws={ws} />
           </ScrollView>
         </EquipmentNameProvider>
       </MockedorTestProvider>

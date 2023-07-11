@@ -1,47 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "react-native-paper";
 import { ProgressCircle } from "react-native-svg-charts";
 import { Slider } from "@miblanchard/react-native-slider";
 import { Switch } from "react-native-paper";
 import { StyleSheet, Text, View } from "react-native";
 import { IsMocked } from "../context/MockedorTestContext";
-import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
 import { useAppDispatch, useAppSelector } from "../hooks/useTypedRedux";
 import { changequipmentstate } from "../state/equipmentstateslicer";
 import { getEquipemntName } from "../context/EquipmentNameContext";
 
-const SpeedControlComponent = () => {
+type SpeedControlComponentProps = {
+  ws: WebSocket;
+};
+
+const SpeedControlComponent = (props: SpeedControlComponentProps) => {
   const { fonts, colors } = useTheme();
   const [speed, setspeed] = useState<number>(0);
-  const url: string = IsMocked() ? MOCK_SOCKET_URL : TEST_MACHINE_SOCKET_URL;
   const equipmentname = getEquipemntName();
   const isOn = useAppSelector((state) => state.equipment).filter(
     (item) => item.name == equipmentname
   )[0].isOn;
   const dispatch = useAppDispatch();
-  const ws = new WebSocket(url);
   useEffect(() => {
-    ws.onopen = () => {
+    console.log("use effect");
+    props.ws.onopen = () => {
       //add logging and monitoring
       console.log("connected speed control");
     };
-    ws.onerror = (event) => {
+    props.ws.onerror = (event) => {
       //add logging and monitoring
       console.log("error");
       console.log(event);
     };
     return () => {
       console.log("closing speed control");
-      ws.close();
     };
   }, []);
   const onToggleSwitch = () => {
     dispatch(changequipmentstate({ name: equipmentname, isOn: !isOn }));
     if (isOn) {
       setspeed(0);
-      ws.send(JSON.stringify({ action: "toggle", payload: "OFF" }));
+      props.ws.send(JSON.stringify({ action: "toggle", payload: "OFF" }));
     } else {
-      ws.send(JSON.stringify({ action: "toggle", payload: "ON" }));
+      props.ws.send(JSON.stringify({ action: "toggle", payload: "ON" }));
     }
   };
   const sendnewspeed = (value: number | number[]) => {
@@ -49,7 +50,7 @@ const SpeedControlComponent = () => {
     //timeout added to prevent sending too many messages
     setTimeout(() => {
       try {
-        ws.send(
+        props.ws.send(
           JSON.stringify({
             action: "set_speed",
             payload: (num * 2.55).toString(),
@@ -81,11 +82,11 @@ const SpeedControlComponent = () => {
         style={{
           fontWeight: fonts.displayLarge.fontWeight,
           fontFamily: fonts.displayLarge.fontFamily,
-          fontSize: fonts.displayLarge.fontSize,
+          fontSize: 50,
           top: -130,
         }}
       >
-        {Math.trunc(speed)}
+        {Math.trunc(speed)}%
       </Text>
       <Slider
         step={1}

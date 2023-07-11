@@ -18,7 +18,7 @@ const GeneralStatsCard = (props: GeneralStatsCardProps) => {
     <View
       style={{
         height: "40%",
-        width: "40%",
+        width: "45%",
         backgroundColor: colors.onPrimaryContainer,
         borderRadius: 10,
         padding: 5,
@@ -44,11 +44,13 @@ const GeneralStatsCard = (props: GeneralStatsCardProps) => {
         <VectorIcon
           color={colors.onPrimary}
           icon={props.dataicon}
-          iconsize={60}
+          iconsize={50}
           iconstyle={{ margin: 5 }}
         />
-        <Text style={{ fontSize: 25 }}>{props.dataValue}</Text>
-        <Text style={{ bottom: -3 }}> {props.units}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ fontSize: 20 }}>{props.dataValue}</Text>
+          <Text style={{ bottom: -3 }}> {props.units}</Text>
+        </View>
       </View>
     </View>
   );

@@ -89,8 +89,9 @@ const GraphAndAnalyticsCardsDisplay = (props: SpecificDataAnalyticsProp) => {
   const isOn = useAppSelector((state) => state.equipment).filter(
     (item) => item.name == equipmentname
   )[0].isOn;
+  const mocked = IsMocked();
   useEffect(() => {
-    if (isOn) {
+    if (isOn || !mocked) {
       if (props.datatype === "General") {
         props.ws.onmessage = (event: MessageEvent) => {
           const data = JSON.parse(event.data) as {
@@ -103,7 +104,7 @@ const GraphAndAnalyticsCardsDisplay = (props: SpecificDataAnalyticsProp) => {
       } else {
         setgraphdata([{ x: 0, y: 0 }]);
         if (props.datatype === "Speed") {
-          setdomain({ x: [0, 9], y: [100, 150] });
+          setdomain({ x: [0, 9], y: [5000, 20000] });
         } else {
           setdomain({ x: [0, 9], y: [10, 40] });
         }
@@ -148,7 +149,7 @@ const GraphAndAnalyticsCardsDisplay = (props: SpecificDataAnalyticsProp) => {
           dataicon={{ iconlibrary: "FontAwesome", iconname: "thermometer" }}
         />
         <GeneralStatsCard
-          units="m/s"
+          units="rpm"
           dataTypeString="Speed"
           dataValue={speed}
           dataicon={{
