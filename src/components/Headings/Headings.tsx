@@ -1,5 +1,5 @@
 import React from "react";
-import definedcolor from "../constants/colors";
+import definedcolor from "../../constants/colors";
 import { Text } from "react-native";
 import { useTheme } from "react-native-paper";
 

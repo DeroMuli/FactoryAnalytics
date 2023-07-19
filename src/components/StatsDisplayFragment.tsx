@@ -6,7 +6,7 @@ import properties from "../constants/Properties";
 import GeneralStatsCard from "./Cards/GeneralStatsCard";
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { DomainPropType } from "victory-core";
-import Heading from "./Headings";
+import Heading from "./Headings/Headings";
 import { IsMocked } from "../context/MockedorTestContext";
 import { MOCK_SOCKET_URL, TEST_MACHINE_SOCKET_URL } from "@env";
 import { getEquipemntName } from "../context/EquipmentNameContext";

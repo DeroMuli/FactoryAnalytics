@@ -1,6 +1,6 @@
 import Heading from "./Headings";
 import { render, screen } from "@testing-library/react-native";
-import definedcolor from "../constants/colors";
+import definedcolor from "../../constants/colors";
 import {
   MD3DarkTheme as PaperDarkTheme,
   Provider as PaperProvider,

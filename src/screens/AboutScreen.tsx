@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView, Image, Text, StyleSheet } from "react-native";
 import colors from "../constants/colors";
 import Properties from "../constants/Properties";
-import Heading from "../components/Headings";
+import Heading from "../components/Headings/Headings";
 import { Paragraph } from "react-native-paper";
 
 const AboutScreen = () => {
