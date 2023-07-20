@@ -4,18 +4,22 @@ type FriendlyTimeStamp = {
   am_or_pm: string;
 };
 
-const getamorpm = (hours: number): "AM" | "PM" => {
+const getamorpm = (date: Date): "AM" | "PM" => {
+  const hours = date.getHours();
   if (hours >= 12) return "PM";
   else return "AM";
 };
 
-const gettwelvehourtime = (hours: number, minutes: number): string => {
+const gettwelvehourtime = (date: Date): string => {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
   const hour = hours > 12 ? hours - 12 : hours;
   const minute = minutes >= 10 ? `${minutes}` : `0${minutes}`;
   return `${hour}:${minute}`;
 };
 
-const getmonthname = (monthnumber: number): string => {
+const getmonthname = (date: Date): string => {
+  let monthnumber = date.getMonth();
   switch (monthnumber) {
     case 0:
       return "January";
@@ -49,13 +53,10 @@ const getmonthname = (monthnumber: number): string => {
 const getfrindlytimestamp = (date: Date): FriendlyTimeStamp => {
   const day = date.getDay();
   const year = date.getFullYear();
-  const month = getmonthname(date.getMonth());
+  const month = getmonthname(date);
   const day_month_year_date = `${day}/${month}/${year}`;
-  const twelve_hour_time = gettwelvehourtime(
-    date.getHours(),
-    date.getMinutes()
-  );
-  const am_or_pm = getamorpm(date.getHours());
+  const twelve_hour_time = gettwelvehourtime(date);
+  const am_or_pm = getamorpm(date);
   return {
     day_month_year_date,
     twelve_hour_time,
