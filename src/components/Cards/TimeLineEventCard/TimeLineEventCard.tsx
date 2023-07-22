@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import { useTheme } from "react-native-paper";
 import colors from "../../../constants/colors";
 import VectorIcon, { Icon } from "../../../assets/icons/VectorIcons";
 import { getfrindlytimestamp } from "../../../util/dateandtimeutils/dateandtimeutils";
 
-type EventType = "Breakdown" | "Added Device" | "Warning" | "Removed device";
+export type EventType =
+  | "Breakdown"
+  | "Added Device"
+  | "Warning"
+  | "Removed device";
 
 export type TimeLineEventCardProps = {
   date: Date;
@@ -26,6 +30,7 @@ const TimeLineEventCard = (props: TimeLineEventCardProps): JSX.Element => {
         backgroundColor: "#FFFFFF",
         borderRadius: 10,
       }}
+      testID="TimeLineEventCard"
     >
       <Text
         style={{

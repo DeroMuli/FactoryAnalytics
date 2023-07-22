@@ -57,6 +57,7 @@
     "@storybook/addon-ondevice-knobs": "^5.3.26",
     "@storybook/react-native": "^5.3.27",
     "@storybook/react-native-server": "^5.3.23",
+    "@testing-library/jest-native": "^5.4.2",
     "@testing-library/react-native": "^12.1.2",
     "@types/jest": "^29.5.3",
     "@types/react-native-dotenv": "^0.2.0",
