@@ -6,8 +6,8 @@ import { RootStackParamList } from "../types/navigation";
 import { SafeAreaView } from "react-native";
 import colors from "../constants/colors";
 import FancySeparator from "../assets/icons/FancySeparator";
-import TimeLineEventCard from "../components/Cards/TimeLineEventCard";
-import type { TimeLineEventCardProps } from "../components/Cards/TimeLineEventCard";
+import TimeLineEventCard from "../components/Cards/TimeLineEventCard/TimeLineEventCard";
+import type { TimeLineEventCardProps } from "../components/Cards/TimeLineEventCard/TimeLineEventCard";
 
 //events card mock data
 const DATA: (TimeLineEventCardProps & { id: string })[] = [

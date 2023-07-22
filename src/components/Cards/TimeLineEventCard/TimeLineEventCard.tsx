@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { useTheme } from "react-native-paper";
-import colors from "../../constants/colors";
-import VectorIcon, { Icon } from "../../assets/icons/VectorIcons";
-import { getfrindlytimestamp } from "../../util/dateandtimeutils/dateandtimeutils";
+import colors from "../../../constants/colors";
+import VectorIcon, { Icon } from "../../../assets/icons/VectorIcons";
+import { getfrindlytimestamp } from "../../../util/dateandtimeutils/dateandtimeutils";
 
 type EventType = "Breakdown" | "Added Device" | "Warning" | "Removed device";
 
