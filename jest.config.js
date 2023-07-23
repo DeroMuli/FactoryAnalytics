@@ -6,4 +6,5 @@ module.exports = {
     "^.+\\.jsx$": "babel-jest",
   },
   testMatch: ["**/?(*.)+(spec|test).ts?(x)"],
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
 };

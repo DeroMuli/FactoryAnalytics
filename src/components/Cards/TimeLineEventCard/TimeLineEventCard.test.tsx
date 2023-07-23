@@ -1,8 +1,7 @@
 import TimeLineEventCard from "./TimeLineEventCard";
 import { render, screen } from "@testing-library/react-native";
+import type { EventType } from "./TimeLineEventCard";
 import {} from "@testing-library/jest-native";
-
-//using jsx due to issues of jest native supporting typescript
 
 //cheap hack for icons since they have issues with jest due to transpiling issues
 jest.mock("react-native-vector-icons/FontAwesome", () => "MockedFontAwesome");
@@ -21,7 +20,7 @@ jest.mock(
 
 describe("The TimeLineEventCard component", () => {
   let date = new Date("2021-01-01T12:00:00");
-  let event = "Breakdown";
+  let event: EventType = "Breakdown";
   let message = "the machine goes brrrrr";
   let room = "boiler room";
   it("renders correctly", () => {
