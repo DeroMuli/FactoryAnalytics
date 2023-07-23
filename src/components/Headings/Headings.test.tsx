@@ -5,6 +5,7 @@ import {
   MD3DarkTheme as PaperDarkTheme,
   Provider as PaperProvider,
 } from "react-native-paper";
+import {} from "@testing-library/jest-native";
 
 describe("Heading", () => {
   it("displays the heading correctly", () => {
@@ -15,7 +16,7 @@ describe("Heading", () => {
       </PaperProvider>
     );
     const headingElement = screen.getByText(heading);
-    expect(headingElement).toBeTruthy();
+    expect(headingElement).toBeVisible();
     expect(headingElement.props.style.fontFamily).toBe(
       PaperDarkTheme.fonts.bodyLarge.fontFamily
     );
