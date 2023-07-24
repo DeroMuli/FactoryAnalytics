@@ -4,8 +4,9 @@ import {
   getmonthname,
   getfrindlytimestamp,
 } from "./dateandtimeutils";
+import { setupMockUTCtimezone } from "../setupmockUTCtimezone";
 
-// The tests depend on the local time zone. If you are in a different time zone, the tests will fail.
+setupMockUTCtimezone();
 
 describe("all date and time utils", () => {
   it("should return AM or PM depending on the hour", () => {
