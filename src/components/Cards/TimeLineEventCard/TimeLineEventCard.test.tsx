@@ -2,29 +2,11 @@ import TimeLineEventCard from "./TimeLineEventCard";
 import { render, screen } from "@testing-library/react-native";
 import type { EventType } from "./TimeLineEventCard";
 import {} from "@testing-library/jest-native";
-import { register, unregister } from "timezone-mock";
+import { setupMockUTCtimezone } from "../../../util/setupmockUTCtimezone";
 
-//cheap hack for icons since they have issues with jest due to transpiling issues
-jest.mock("react-native-vector-icons/FontAwesome", () => "MockedFontAwesome");
-jest.mock("react-native-vector-icons/AntDesign", () => "MockedAntDesign");
-jest.mock("react-native-vector-icons/Entypo", () => "MockedEntypo");
-jest.mock("react-native-vector-icons/EvilIcons", () => "MockedEvilIcons");
-jest.mock("react-native-vector-icons/Feather", () => "MockedFeather");
-jest.mock(
-  "react-native-vector-icons/MaterialCommunityIcons",
-  () => "MockedMaterialCommunityIcons"
-);
-jest.mock(
-  "react-native-vector-icons/MaterialIcons",
-  () => "MockedMaterialIcons"
-);
-
-afterAll(() => {
-  unregister();
-});
+setupMockUTCtimezone();
 
 describe("The TimeLineEventCard component", () => {
-  register("Etc/GMT");
   let date = new Date(Date.UTC(2021, 1, 1, 12, 0, 0)); // 1st Feb 2021 12:00 PM
   let event: EventType = "Breakdown";
   let message = "the machine goes brrrrr";
@@ -82,7 +64,6 @@ describe("The TimeLineEventCard component", () => {
         room={room}
       />
     );
-    console.log(date.getTimezoneOffset());
     expect(screen.getByText("1/February/2021")).toBeVisible();
     expect(screen.getByText("12:00")).toBeVisible();
     expect(screen.getByText("PM")).toBeVisible();
