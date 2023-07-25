@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Switch, useTheme } from "react-native-paper";
 import { Dimensions, TouchableOpacity } from "react-native";
-import VectorIcon from "../../assets/icons/VectorIcons";
-import type { Icon } from "../../assets/icons/VectorIcons";
+import VectorIcon from "../../../assets/icons/VectorIcons";
+import type { Icon } from "../../../assets/icons/VectorIcons";
 import { Text, StyleSheet } from "react-native";
-import { screen_names } from "../../constants/ScreenNames";
+import { screen_names } from "../../../constants/ScreenNames";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../types/navigation";
-import { useAppSelector, useAppDispatch } from "../../hooks/useTypedRedux";
-import { changequipmentstate } from "../../state/equipmentstateslicer";
+import { RootStackParamList } from "../../../types/navigation";
+import { useAppSelector, useAppDispatch } from "../../../hooks/useTypedRedux";
+import { changequipmentstate } from "../../../state/equipmentstateslicer";
 
 type FactoryEquipmentCardProp = {
   name: string;
@@ -26,12 +26,11 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const onToggleSwitch = () => {
-    dispatch(changequipmentstate({ name: props.name, isOn: !isOn }));
-    if (isOn) {
-      props.socket.send(JSON.stringify({ action: "toggle", payload: "OFF" }));
-    } else {
-      props.socket.send(JSON.stringify({ action: "toggle", payload: "ON" }));
-    }
+    let newisOn = !isOn;
+    dispatch(changequipmentstate({ name: props.name, isOn: newisOn }));
+    props.socket.send(
+      JSON.stringify({ action: "toggle", payload: newisOn ? "ON" : "OFF" })
+    );
   };
   return (
     <TouchableOpacity
@@ -48,6 +47,7 @@ const FactoryEquipmentCard = (props: FactoryEquipmentCardProp) => {
           Equipemt_name: props.name,
         })
       }
+      testID="FactoryEquipmentCard"
     >
       <Text style={{ margin: 5, fontWeight: "bold" }}>{props.name}</Text>
       <VectorIcon

@@ -8,4 +8,5 @@ module.exports = {
   testMatch: ["**/?(*.)+(spec|test).ts?(x)"],
   setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
   setupFiles: ["./jest.setup.js"],
+  testEnvironment: "jsdom",
 };

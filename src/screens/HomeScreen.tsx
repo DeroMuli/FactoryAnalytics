@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { setEquipements } from "../state/equipmentstateslicer";
 import { FlatList, View } from "react-native";
 import { StyleSheet, SafeAreaView, Text } from "react-native";
-import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard";
+import FactoryEquipmentCard from "../components/Cards/FactoryEquipmentCard/FactoryEquipmentCard";
 import colors from "../constants/colors";
 import { ActivityIndicator } from "react-native-paper";
 import { useGetFactoryEquipmentsDataQuery } from "../state/apislicer";
