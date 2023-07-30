@@ -3,7 +3,7 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { Chip, useTheme } from "react-native-paper";
 import colors from "../constants/colors";
 import properties from "../constants/Properties";
-import GeneralStatsCard from "./Cards/GeneralStatsCard";
+import GeneralStatsCard from "./Cards/GeneralStatsCard/GeneralStatsCard";
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { DomainPropType } from "victory-core";
 import Heading from "./Headings/Headings";
