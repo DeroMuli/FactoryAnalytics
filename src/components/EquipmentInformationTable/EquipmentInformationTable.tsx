@@ -1,12 +1,15 @@
 import React from "react";
-import definedcolor from "../constants/colors";
+import definedcolor from "../../constants/colors";
 import { Text } from "react-native";
 import { DataTable, useTheme } from "react-native-paper";
 
 const EquipmentInformationTable = () => {
   const { fonts, colors } = useTheme();
   return (
-    <DataTable style={{ borderWidth: 1, borderRadius: 5 }}>
+    <DataTable
+      style={{ borderWidth: 1, borderRadius: 5 }}
+      testID="EquipmentInformationTable"
+    >
       <DataTable.Header>
         <DataTable.Title textStyle={{ color: "black" }}>
           Specification

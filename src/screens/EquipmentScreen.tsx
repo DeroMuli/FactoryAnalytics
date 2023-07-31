@@ -4,7 +4,7 @@ import { screen_names } from "../constants/ScreenNames";
 import { StyleSheet, SafeAreaView, View, Text, ScrollView } from "react-native";
 import SpeedControlComponent from "../components/SpeedControlComponent";
 import Heading from "../components/Headings/Headings";
-import EquipmentInformationTable from "../components/EquipmentInformationTable";
+import EquipmentInformationTable from "../components/EquipmentInformationTable/EquipmentInformationTable";
 import colors from "../constants/colors";
 import StatsDisplayFragment from "../components/StatsDisplayFragment";
 import { RootStackParamList } from "../types/navigation";
