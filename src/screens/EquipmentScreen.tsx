@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen_names } from "../constants/ScreenNames";
 import { StyleSheet, SafeAreaView, View, Text, ScrollView } from "react-native";
-import SpeedControlComponent from "../components/SpeedControlComponent";
+import SpeedControlComponent from "../components/SpeedControlComponent/SpeedControlComponent";
 import Heading from "../components/Headings/Headings";
 import EquipmentInformationTable from "../components/EquipmentInformationTable/EquipmentInformationTable";
 import colors from "../constants/colors";

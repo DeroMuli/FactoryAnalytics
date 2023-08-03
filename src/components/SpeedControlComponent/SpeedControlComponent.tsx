@@ -4,10 +4,10 @@ import { ProgressCircle } from "react-native-svg-charts";
 import { Slider } from "@miblanchard/react-native-slider";
 import { Switch } from "react-native-paper";
 import { StyleSheet, Text, View } from "react-native";
-import { IsMocked } from "../context/MockedorTestContext";
-import { useAppDispatch, useAppSelector } from "../hooks/useTypedRedux";
-import { changequipmentstate } from "../state/equipmentstateslicer";
-import { getEquipemntName } from "../context/EquipmentNameContext";
+import { IsMocked } from "../../context/MockedorTestContext";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTypedRedux";
+import { changequipmentstate } from "../../state/equipmentstateslicer";
+import { getEquipemntName } from "../../context/EquipmentNameContext";
 
 type SpeedControlComponentProps = {
   ws: WebSocket;
@@ -68,7 +68,7 @@ const SpeedControlComponent = (props: SpeedControlComponentProps) => {
     setspeed(num);
   };
   return (
-    <View style={styles.container}>
+    <View testID="SpeedControlComponent" style={styles.container}>
       <ProgressCircle
         style={styles.speed_progressCircle}
         progress={speed * 0.01}
