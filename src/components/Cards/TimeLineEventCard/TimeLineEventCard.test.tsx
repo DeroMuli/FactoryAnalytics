@@ -8,7 +8,7 @@ setupMockUTCtimezone();
 
 describe("The TimeLineEventCard component", () => {
   let date = new Date(Date.UTC(2021, 1, 1, 12, 0, 0)); // 1st Feb 2021 12:00 PM
-  let event: EventType = "Breakdown";
+  let event: EventType = "Warning";
   let message = "the machine goes brrrrr";
   let room = "boiler room";
   it("renders correctly", () => {

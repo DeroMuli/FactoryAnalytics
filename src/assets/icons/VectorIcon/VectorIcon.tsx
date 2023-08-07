@@ -6,7 +6,8 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { StyleProp, ViewStyle } from "react-native";
+import { StyleProp, ViewStyle, Text, View } from "react-native";
+import ErrorBoundary from "../../../components/ErrorBoundary/ErrorBoundary";
 
 type IconLibrary =
   | "FontAwesome"
@@ -29,10 +30,11 @@ export type FactoryIconProp = {
   iconstyle: StyleProp<ViewStyle>;
 };
 
-const VectorIcon = (props: FactoryIconProp) => {
+const Icons = (props: FactoryIconProp) => {
   const { icon, color } = props;
   const iconsize = props.iconsize || 80;
   const style = props.iconstyle;
+  checkifIconExists(icon);
   switch (icon.iconlibrary) {
     case "AntDesign":
       return (
@@ -97,7 +99,57 @@ const VectorIcon = (props: FactoryIconProp) => {
           size={iconsize}
         />
       );
+    default:
+      throw new Error("Icon library not found");
   }
 };
+
+//change this to a more appropriate fallback icon
+const FallbackIcon = (): JSX.Element => {
+  return <Text>Icon not found</Text>;
+};
+
+const VectorIcon = (props: FactoryIconProp) => {
+  return (
+    <View testID="VectorIcon">
+      <ErrorBoundary fallback={<FallbackIcon />}>
+        <Icons {...props} />
+      </ErrorBoundary>
+    </View>
+  );
+};
+
+function checkifIconExists(icon: Icon) {
+  let glyphmap;
+  switch (icon.iconlibrary) {
+    case "AntDesign":
+      glyphmap = AntDesign.getRawGlyphMap();
+      break;
+    case "Entypo":
+      glyphmap = Entypo.getRawGlphMap();
+      break;
+    case "EvilIcons":
+      glyphmap = EvilIcons.getRawGlphMap();
+      break;
+    case "Feather":
+      glyphmap = Feather.getRawGlphMap();
+      break;
+    case "FontAwesome":
+      glyphmap = FontAwesome.getRawGlphMap();
+      break;
+    case "MaterialCommunityIcons":
+      glyphmap = MaterialCommunityIcons.getRawGlphMap();
+      break;
+    case "MaterialIcons":
+      glyphmap = MaterialIcons.getRawGlphMap();
+      break;
+  }
+  const hasicon = glyphmap.hasOwnProperty(icon.iconname);
+  if (!hasicon) {
+    throw new Error(`Icon ${icon.iconname} not found in ${icon.iconlibrary}`);
+  } else {
+    return;
+  }
+}
 
 export default VectorIcon;

@@ -8,7 +8,7 @@ import { fireEvent, render, screen } from "@testing-library/react-native";
 import {} from "@testing-library/jest-native";
 import { Provider } from "react-redux";
 import { store } from "../../../state/store";
-import type { Icon } from "../../../assets/icons/VectorIcons";
+import type { Icon } from "../../../assets/icons/VectorIcon/VectorIcon";
 import { setEquipements } from "../../../state/equipmentstateslicer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Server, Client } from "mock-socket";
@@ -39,7 +39,10 @@ afterEach(() => {
 });
 
 describe("FactoryEquipmentCard", () => {
-  const icon: Icon = { iconlibrary: "MaterialCommunityIcons", iconname: "fan" };
+  const icon: Icon = {
+    iconname: "question",
+    iconlibrary: "AntDesign",
+  };
   const mean_speed = 20;
   const mean_temp = 30;
   const socket = new WebSocket(mockurl);

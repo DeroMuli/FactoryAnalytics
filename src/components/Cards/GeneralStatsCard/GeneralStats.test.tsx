@@ -1,9 +1,12 @@
 import GeneralStatsCard from "./GeneralStatsCard";
 import { render, screen } from "@testing-library/react-native";
-import type { Icon } from "../../../assets/icons/VectorIcons";
+import type { Icon } from "../../../assets/icons/VectorIcon/VectorIcon";
 
 describe("GeneralStatsCard", () => {
-  const icon: Icon = { iconlibrary: "MaterialCommunityIcons", iconname: "fan" };
+  const icon: Icon = {
+    iconname: "question",
+    iconlibrary: "AntDesign",
+  };
   it("should render the GeneralStatsCard component", () => {
     render(
       <GeneralStatsCard
